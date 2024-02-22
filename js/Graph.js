@@ -223,6 +223,7 @@ export class Graph {
 	}
 	
 	showGraph($graphMarkers, $similarElement) {
+		$graphMarkers.style.display = 'block'
 		$graphMarkers.setAttribute('viewBox', $similarElement.getAttribute('viewBox'))
 		for (let vertex of this.vertexes) {
 			// let $idEl = document.createElement('div')
@@ -413,7 +414,7 @@ export class Graph {
 			};
 		}
 		
-		console.group('ТРАССИРОВКА ПЕРЕСЕКАЮЩИХСЯ ЛИНИЙ')
+		console.group('ТРАССИРОВКА ПРИМЫКАЮЩИХ ЛИНИЙ')
 		let hallwayVertexes = []
 		for (let vertex of this.vertexes) {
 			if (vertex.type === 'hallway') hallwayVertexes.push(vertex)

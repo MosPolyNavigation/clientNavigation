@@ -49,18 +49,35 @@ export class PlanHandler {
         //     this.$planObject.style = 'visibility: visible'
         // }.bind(this), 20)
 
-        let planElements = this.$svgPlan.getElementsByTagName('*') //все элементы документа плана
-        for (const $el of planElements) { //если элемент это аудитория - добавляем в аудитории
-            if (Settings.auditoriumsColors.includes($el.getAttribute('fill'))) {
-                this.auditoriums.set($el.id, $el)
-                $el.classList.add('auditorium') //и добавляем аудитории соответствующий класс, для подсветки
-            } else if ($el.tagName === Settings.entrancesTag //если элемент - вход - добавляем в входы
-                && Settings.entrancesColors.includes($el.getAttribute('fill'))) {
-                this.entrances.set($el.id, $el)
-                $el.classList.add('entrance') //и добавляем соответствующий класс для
-                $el.setAttribute('fill-opacity', '0')
-            }
+        // let planElements = this.$svgPlan.getElementsByTagName('*') //все элементы документа плана
+        // for (const $el of planElements) { //если элемент это аудитория - добавляем в аудитории
+        //     if ($el.tagName === 'circle' //если элемент - вход - добавляем в входы
+        //         && Settings.entrancesColors.includes($el.getAttribute('fill'))) {
+        //         this.entrances.set($el.id, $el)
+        //         $el.classList.add('entrance') //и добавляем соответствующий класс для
+        //         $el.setAttribute('fill-opacity', '0')
+        //     } else if (Settings.auditoriumsColors.includes($el.getAttribute('fill'))) {
+        //         this.auditoriums.set($el.id, $el)
+        //         $el.classList.add('auditorium') //и добавляем аудитории соответствующий класс, для подсветки
+        //     }
+        // }
+        console.groupCollapsed('Помещения')
+        for (let $space of this.$svgPlan.getElementById('Spaces').children) {
+            this.auditoriums.set($space.id, $space)
+            if($space.getAttribute('fill') === Settings.auditoriumColor)
+                $space.classList.add('auditorium') //и добавляем аудитории соответствующий класс, для подсветки
+            else
+                $space.classList.add('other-space') //и добавляем аудитории соответствующий класс, для подсветки
+            console.log($space);
         }
+        console.groupEnd()
+        console.groupCollapsed('Входы')
+        for (let $entrance of this.$svgPlan.getElementById('Entrances').children) {
+            this.entrances.set($entrance.id, $entrance)
+            $entrance.classList.add('entrance') //и добавляем соответствующий класс для
+            console.log($entrance);
+        }
+        console.groupEnd()
 
         function isEntranceOfAuditorium($entrance, $auditorium) {
             let cx = Number($entrance.getAttribute('cx'))

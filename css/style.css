@@ -300,7 +300,7 @@ input {
 }
 
 .plan * {
-	transition: fill .25s ease, fill-opacity .25s ease;
+	transition: fill .25s ease, fill-opacity .25s ease, opacity .25s ease;
 }
 
 /*СТИЛИ ДЛЯ ПЛАНА*/
@@ -308,10 +308,19 @@ input {
 	fill: #3D4356;
 }
 
+.other-space:hover:not(.selected) {
+	opacity: .35;
+}
+
 /*noinspection ALL*/
-.selected {
+.auditorium.selected {
 	fill: #4A5598;
 }
+
+.other-space.selected {
+	opacity: .5;
+}
+
 
 .selected-entrance {
 	fill-opacity: 1;
@@ -351,10 +360,12 @@ input {
 	justify-content: center;
 	font-size: large;
 	font-weight: bold;
+	pointer-events: none;
 }
 
 .button-plus, .button-minus {
 	padding-bottom: 6px;
+	pointer-events: auto;
 }
 
 .drag-able {
@@ -396,4 +407,9 @@ input {
 	position: absolute;
 	top: 0;
 	left: 0;
+	pointer-events: none;
+}
+
+.plan #Icons{
+	pointer-events: none;
 }
