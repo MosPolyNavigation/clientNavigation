@@ -66,8 +66,10 @@ export class PlanHandler {
             this.auditoriums.set($space.id, $space)
             if($space.getAttribute('fill') === Settings.auditoriumColor)
                 $space.classList.add('auditorium') //и добавляем аудитории соответствующий класс, для подсветки
-            else
+            else {
                 $space.classList.add('other-space') //и добавляем аудитории соответствующий класс, для подсветки
+                $space.removeAttribute('opacity')
+            }
             console.log($space);
         }
         console.groupEnd()

@@ -300,16 +300,21 @@ input {
 }
 
 .plan * {
-	transition: fill .25s ease, fill-opacity .25s ease, opacity .25s ease;
+	transition: fill .25s ease, fill-opacity .25s ease, opacity .25s ease, filter .25s ease;
 }
 
 /*СТИЛИ ДЛЯ ПЛАНА*/
+.other-space {
+	fill-opacity: .2;
+	filter: saturate(1);
+}
+
 .auditorium:hover:not(.selected) {
 	fill: #3D4356;
 }
 
 .other-space:hover:not(.selected) {
-	opacity: .35;
+	fill-opacity: .3;
 }
 
 /*noinspection ALL*/
@@ -318,7 +323,8 @@ input {
 }
 
 .other-space.selected {
-	opacity: .5;
+	fill-opacity: .5;
+	filter: saturate(.8);
 }
 
 
