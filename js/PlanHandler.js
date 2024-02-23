@@ -63,6 +63,9 @@ export class PlanHandler {
         // }
         console.groupCollapsed('Помещения')
         for (let $space of this.$svgPlan.getElementById('Spaces').children) {
+			if($space.id.at(0) === "!")
+				continue
+	        
             this.auditoriums.set($space.id, $space)
             if($space.getAttribute('fill') === Settings.auditoriumColor)
                 $space.classList.add('auditorium') //и добавляем аудитории соответствующий класс, для подсветки

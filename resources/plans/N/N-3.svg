@@ -42,6 +42,7 @@
 <rect id="n-301" x="5" y="5" width="165" height="255" fill="#3B3C41"/>
 <rect id="n-302" x="170" y="5" width="160" height="255" fill="#3B3C41"/>
 </g>
+<path id="Vector 305" d="M330 350V1100M430 1100V350M5 350H1529.5V1100M1631 350H2830M3050 350H2830M2830 350V1100M2740 350V1100M1210 260H1850M1630 1100V350M2410 260H3050M630 260H5" stroke="#525252" stroke-width="5"/>
 <g id="Walls">
 <path id="Vneskniy kontur" d="M630 5H5V1100H630V460H1210V1100H1850V460H2410V1100H3050V5H2410V240H1850V5H1210V240H630V5Z" stroke="#D9D9D9" stroke-width="10"/>
 <path id="Vector 137" d="M1850 340L1850 460" stroke="#D9D9D9" stroke-width="10"/>
@@ -254,6 +255,26 @@
 <path id="Vector 154_3" d="M502 50H517M517 50L514 64M517 50L490 71" stroke="#9CD9BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <path id="Vector 155_3" d="M558 95H543M543 95L546 81M543 95L570 74" stroke="#9CD9BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
+</g>
+<g id="Doors">
+<path id="Vector 301" d="M374 343L346 350H340" stroke="#D9D9D9" stroke-width="4"/>
+<path id="Vector 302" d="M386 343L414 350H420" stroke="#D9D9D9" stroke-width="4"/>
+</g>
+<g id="Doors_2">
+<path id="Vector 301_2" d="M374 267L346 260H340" stroke="#D9D9D9" stroke-width="4"/>
+<path id="Vector 302_2" d="M386 267L414 260H420" stroke="#D9D9D9" stroke-width="4"/>
+</g>
+<g id="Doors_3">
+<path id="Vector 301_3" d="M1574 267L1546 260H1540" stroke="#D9D9D9" stroke-width="4"/>
+<path id="Vector 302_3" d="M1586 267L1614 260H1620" stroke="#D9D9D9" stroke-width="4"/>
+</g>
+<g id="Doors_4">
+<path id="Vector 301_4" d="M2775.5 267L2754.5 260H2750" stroke="#D9D9D9" stroke-width="4"/>
+<path id="Vector 302_4" d="M2784.5 267L2805.5 260H2810" stroke="#D9D9D9" stroke-width="4"/>
+</g>
+<g id="Doors_5">
+<path id="Vector 301_5" d="M2779.75 343L2755.25 350H2750" stroke="#D9D9D9" stroke-width="4"/>
+<path id="Vector 302_5" d="M2790.25 343L2814.75 350H2820" stroke="#D9D9D9" stroke-width="4"/>
 </g>
 </g>
 </g>
