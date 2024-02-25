@@ -481,4 +481,8 @@ export class Graph {
 		}
 		console.groupEnd()
 	}
+	
+	defineVertexesTypes() {
+	
+	}
 }

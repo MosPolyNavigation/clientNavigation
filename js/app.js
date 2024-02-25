@@ -19,12 +19,13 @@ planHandler.$planObject.addEventListener('load', () => { //при загрузк
 	planHandler.onPlanLoad()
 	way.setupWay(planHandler.$svgPlan)
 	
+	//Процесс трассировки и заполнения графа
 	graph.tracing($tableOfEdge)
 	graph.createVertexesList()
 	graph.fillGraph()
 	graph.tracingCross()
 	graph.fillAuditoriumsVertexes(planHandler.AuditoriumsIdEntrancesId, planHandler.$svgPlan)
-	
+	graph.defineVertexesTypes()
 })
 
 dragHandler = new DragHandler(
@@ -96,8 +97,3 @@ document.querySelector('.build-way').addEventListener('click', () => {
 document.querySelector('.hide-graph').addEventListener('click', () => {
 	graph.$graphObject.style.visibility = 'hidden'
 })
-
-
-/*
-Это потом убрать
- */
