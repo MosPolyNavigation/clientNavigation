@@ -485,4 +485,8 @@ export class Graph {
 	defineVertexesTypes() {
 	
 	}
+	
+	makeVertexesAsMap() {
+	
+	}
 }

@@ -26,6 +26,7 @@ planHandler.$planObject.addEventListener('load', () => { //при загрузк
 	graph.tracingCross()
 	graph.fillAuditoriumsVertexes(planHandler.AuditoriumsIdEntrancesId, planHandler.$svgPlan)
 	graph.defineVertexesTypes()
+	graph.makeVertexesAsMap()
 })
 
 dragHandler = new DragHandler(
