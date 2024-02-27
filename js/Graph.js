@@ -397,7 +397,7 @@ export class Graph {
 		
 		
 		
-		this.vertexes = vertexesMap
+		//this.vertexes = vertexesMap
 	}
 	
 	showGraph($graphMarkers, $similarElement) {
@@ -431,9 +431,11 @@ export class Graph {
 	}
 	
 	getShortestWayFromTo(idVertex1, idVertex2) {
+		let filterVertexes = this.vertexes.filter((vertex) => vertex.type === 'hallway' || vertex.id === idVertex1 || vertex.id === idVertex2 || vertex.id === 'n-4-cowork-1')
+		//Список вершин находящиеся только в коридорах
 		let distances = new Map() //расстояния до вершин от начальной точки (старта)
 		let ways = new Map() //маршруты из точек
-		for (let vertex of this.vertexes) { // для всех вершин устанавливаем бесконечную длину пути
+		for (let vertex of filterVertexes) { // для всех вершин устанавливаем бесконечную длину пути
 			distances.set(vertex.id, Infinity)
 			ways.set(vertex.id, [])
 		}
@@ -443,7 +445,7 @@ export class Graph {
 		
 		let currentVertexID = idVertex1 //ид обрабатываемой вершины
 		// for (let i = 0; i < 2; i ++) {
-		while (finals.size !== this.vertexes.length) { //пока не посетили все вершины (или пока не обнаружено, что
+		while (finals.size !== filterVertexes) { //пока не посетили все вершины (или пока не обнаружено, что
 			// граф не связный)
 			
 			//релаксации для соседних вершин
