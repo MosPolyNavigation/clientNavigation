@@ -45,5 +45,7 @@ Settings.auditoriumsRusNames = new Map(auditoriumsRusNames)
 
 let throughPassVertexes = [
 	'n-4-cowork-1',
+	'n-4-stair-3',
+	'n-4-u-2'
 ]
 Settings.throughPassVertexes = throughPassVertexes
