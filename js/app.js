@@ -12,21 +12,21 @@ planHandler.setSelectorElements(document.querySelector('.selector'),
 	document.querySelector('.button-from'),
 	document.querySelector('.button-to'))
 
+let isGraphLoaded = false
+export let graph = new Graph(document.querySelector('.graph'))
+graph.$graphObject.data = Settings.graphName
+graph.$graphObject.addEventListener('load', () => { //при загрузке плана
+	console.log('граф загружен', Date.now())
+	isGraphLoaded = true
+	processGraphAndPlan()
+})
 
+let isPlanLoaded = false
 export let dragHandler
 planHandler.$planObject.addEventListener('load', () => { //при загрузке плана
-	console.log('план загружен')
-	planHandler.onPlanLoad()
-	way.setupWay(planHandler.$svgPlan)
-	
-	//Процесс трассировки и заполнения графа
-	graph.tracing($tableOfEdge)
-	graph.createVertexesList()
-	graph.fillGraph()
-	graph.tracingCross()
-	graph.fillAuditoriumsVertexes(planHandler.AuditoriumsIdEntrancesId, planHandler.$svgPlan)
-	graph.defineVertexesTypes()
-	graph.makeVertexesAsMap()
+	console.log('план загружен', Date.now())
+	isPlanLoaded = true
+	processGraphAndPlan()
 })
 
 dragHandler = new DragHandler(
@@ -36,8 +36,21 @@ dragHandler = new DragHandler(
 	document.querySelector('.button-plus'),
 	document.querySelector('.button-minus'));
 
-export let graph = new Graph(document.querySelector('.graph'))
-graph.$graphObject.data = Settings.graphName
+function processGraphAndPlan() {
+	if (isGraphLoaded && isGraphLoaded) {
+		planHandler.onPlanLoad()
+		way.setupWay(planHandler.$svgPlan)
+		
+		//Процесс трассировки и заполнения графа
+		graph.tracing($tableOfEdge)
+		graph.createVertexesList()
+		graph.fillGraph()
+		graph.tracingCross()
+		graph.fillAuditoriumsVertexes(planHandler.AuditoriumsIdEntrancesId, planHandler.$svgPlan)
+		graph.defineVertexesTypes()
+		graph.makeVertexesAsMap()
+	}
+}
 
 export let way = new Way(document.querySelector('.svg-way'),)
 
