@@ -403,7 +403,6 @@ export class Graph {
 				vertex.type = 'transitAu' // Тип проходных помещений
 			}
 		}
-		console.clear()
 		let groupedVertexes = this.vertexes.reduce((acc, vertex) => {
 			let key = vertex.type === 'lift' || vertex.type === 'stair' || vertex.type === 'campusTransition' || vertex.type === 'transitAu'  ? 'С измененным типом' : 'С неизмененным типом';
 			acc[key] = acc[key] || [];
