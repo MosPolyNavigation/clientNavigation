@@ -391,14 +391,32 @@ export class Graph {
 	}
 	
 	defineVertexesTypes() {
-	
+		// console.clear()
+		for (let vertex of this.vertexes) {
+			if (vertex.id.indexOf('lift') > 0) {
+				vertex.type = 'lift'
+			} else if (vertex.id.indexOf('stair') > 0) {
+				vertex.type = 'stair'
+			} else if (vertex.id.indexOf('campusTransition') > 0) {
+				vertex.type = 'campusTransition'
+			} else if (vertex.neighboringIDs.size > 1 && vertex.type === 'entrancesToAu') {
+				vertex.type = 'transitAu'
+			}
+		}
+		console.clear()
+		let groupedVertexes = this.vertexes.reduce((acc, vertex) => {
+			let key = vertex.type === 'lift' || vertex.type === 'stair' || vertex.type === 'campusTransition' || vertex.type === 'transitAu'  ? 'С измененным типом' : 'С неизмененным типом';
+			acc[key] = acc[key] || [];
+			acc[key].push(vertex);
+			return acc;
+		}, {});
+		console.table(groupedVertexes['С измененным типом'])
 	}
-	
 	makeVertexesAsMap() {
 		// let vertexesMap = new Map()
 		
 		
-		
+
 		//this.vertexes = vertexesMap
 	}
 	
@@ -435,6 +453,10 @@ export class Graph {
 	getShortestWayFromTo(idVertex1, idVertex2) {
 		let filteredVertexes = this.vertexes.filter((vertex) => {
 			return (vertex.type === 'hallway' ||
+				vertex.type === 'lift' ||
+				vertex.type === 'stair' ||
+				vertex.type === 'campusTransition' ||
+				vertex.type === 'transitAu' ||
 				vertex.id === idVertex1 ||
 				vertex.id === idVertex2 ||
 				Settings.throughPassVertexes.includes(vertex.id)
