@@ -391,16 +391,16 @@ export class Graph {
 	}
 	
 	defineVertexesTypes() {
-		// console.clear()
+		// Функция переопределяет типы вершин
 		for (let vertex of this.vertexes) {
 			if (vertex.id.indexOf('lift') > 0) {
-				vertex.type = 'lift'
+				vertex.type = 'lift' // Тип лифтов
 			} else if (vertex.id.indexOf('stair') > 0) {
-				vertex.type = 'stair'
+				vertex.type = 'stair' // Тип лестниц
 			} else if (vertex.id.indexOf('campusTransition') > 0) {
-				vertex.type = 'campusTransition'
+				vertex.type = 'campusTransition' // Тип перехода между копрусами
 			} else if (vertex.neighboringIDs.size > 1 && vertex.type === 'entrancesToAu') {
-				vertex.type = 'transitAu'
+				vertex.type = 'transitAu' // Тип проходных помещений
 			}
 		}
 		console.clear()
