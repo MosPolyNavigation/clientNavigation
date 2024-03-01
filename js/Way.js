@@ -2,6 +2,7 @@ import {Settings} from './Settings.js';
 
 export class Way { //класс для обработки свг-пути
 	$svg //элемент свг для путей
+	$endMarker
 	
 	constructor($svg) {
 		this.$svg = $svg
@@ -9,9 +10,11 @@ export class Way { //класс для обработки свг-пути
 	
 	setupWay($similarElement) {
 		this.$svg.setAttribute('viewBox', $similarElement.getAttribute('viewBox'))
+		this.$endMarker = this.$svg.getElementById('end-arrow')
 	}
 	
 	build(graph, wayAndDistance) { //построить путь -
+		this.$endMarker.style.visibility = 'hidden'
 		this.removeOldWays()
 		let distance = wayAndDistance.distance
 		this.$svg.setAttribute('style', `stroke-dashoffset: ${distance}; stroke-dasharray: ${distance};`)
@@ -28,11 +31,12 @@ export class Way { //класс для обработки свг-пути
 		$path.setAttribute('stroke', Settings.wayColor) //цвет линии
 		$path.setAttribute('stroke-width', Settings.wayWidth) //ширина линии
 		$path.setAttribute('marker-start', 'url(#start-dot)') //маркер начала - кружочек
+		$path.setAttribute('marker-end', 'url(#end-arrow)')
 		$path.classList.add('way-path')
 		this.$svg.prepend($path) //добавляем path в свг
 		setTimeout(function () { //через секунду - когда линия полностью нарисуется добавить маркер конца - стрелочку
-			$path.setAttribute('marker-end', 'url(#end-arrow)')
-		}, 1000)
+			this.$endMarker.style.visibility = 'visible'
+		}.bind(this), 1000)
 		console.log($path)
 	}
 	
