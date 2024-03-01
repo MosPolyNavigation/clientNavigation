@@ -13,7 +13,7 @@ export class Settings {
 	static graphName = 'resources/plans/N/N-4-GRAPH.svg' //путь к графу
 	
 	static wayColor = '#3CD288'
-	static wayWidth = '4px'
+	static wayWidth = '8px'
 }
 
 //ассоциации для сэмпла
