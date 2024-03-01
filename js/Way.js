@@ -34,7 +34,6 @@ export class Way { //класс для обработки свг-пути
 			$path.setAttribute('marker-end', 'url(#end-arrow)')
 		}, 1000)
 		console.log($path)
-		console.log($path.pathLength)
 	}
 	
 	removeOldWays() {

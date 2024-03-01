@@ -450,6 +450,7 @@ export class Graph {
 	}
 	
 	getShortestWayFromTo(idVertex1, idVertex2) {
+		let start = Date.now()
 		let filteredVertexes = this.vertexes.filter((vertex) => {
 			return (vertex.type === 'hallway' ||
 				vertex.type === 'lift' ||
@@ -474,12 +475,16 @@ export class Graph {
 		
 		let currentVertexID = idVertex1 //ид обрабатываемой вершины
 		// for (let i = 0; i < 2; i ++) {
-		while (finals.size !== filteredVertexes.length) { //пока не посетили все вершины (или пока не обнаружено, что
-			// граф не связный)
+		let iterations = [0, 0] //счётчик количества итераций внешнего и внутреннего циклов
+		let isEndVertexInFinals = false //Флаг находится ли конечная вершина в обработанных
+		while (finals.size !== filteredVertexes.length && !isEndVertexInFinals) { //пока не посетили все вершины (или пока не обнаружено, что
+			// граф не связный) или пока не обработана конечная вершина
+			iterations[0]+=1
 			
 			//релаксации для соседних вершин
 			let currentVertexDistance = distances.get(currentVertexID) //длина до обрабатываемой вершины
 			for (let neighborId of this.getVertexByID(currentVertexID).neighboringIDs) { //для всех айдишников соседей вершины по айди
+				iterations[1]+=1
 				let distanceBetweenCurrentAndNeighbor = this.getDistanceBetween2VertexesByID(currentVertexID, neighborId)
 				//расстояние между обрабатываемой и соседней вершиной
 				
@@ -498,7 +503,8 @@ export class Graph {
 			}
 			
 			finals.add(currentVertexID) //помечаем текущую вершину как обработканную
-			
+			if(currentVertexID === idVertex2)
+				isEndVertexInFinals = true
 			//поиск следующей обрабатываемой вершины (необработанная вершина с наименьшим расстоянием от начала)
 			let minDistance = Infinity
 			let nextVertexID = ''
@@ -520,6 +526,7 @@ export class Graph {
 		
 		// console.log(distances)
 		// console.log(ways)
+		console.log(`Путь найден за ${Date.now() - start} миллисекунд с количеством итераций ${iterations[0]}, ${iterations[1]} и количеством вершин ${filteredVertexes.length}`)
 		return {
 			way: ways.get(idVertex2),
 			distance: Math.floor(distances.get(idVertex2))
