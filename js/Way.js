@@ -31,7 +31,7 @@ export class Way { //класс для обработки свг-пути
 		$path.classList.add('way-path')
 		this.$svg.prepend($path) //добавляем path в свг
 		setTimeout(function () { //через секунду - когда линия полностью нарисуется добавить маркер конца - стрелочку
-			$path.setAttribute('marker-end', 'url(#start-dot)')
+			$path.setAttribute('marker-end', 'url(#start-dot)') //sdafasdfasdfasdf
 		}, 1000)
 		console.log($path)
 	}
