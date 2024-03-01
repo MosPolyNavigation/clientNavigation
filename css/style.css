@@ -285,7 +285,6 @@ input {
 	/*stroke-dashoffset: 468;*/
 	/*stroke-dasharray: 468;*/
 	animation: draw-way 1s ease-in-out forwards;
-	pointer-events: auto;
 }
 
 
