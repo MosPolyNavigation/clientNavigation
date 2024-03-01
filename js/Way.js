@@ -27,10 +27,10 @@ export class Way { //класс для обработки свг-пути
 		$path.setAttribute('d', d) //устанавливаем путь в атрибут d
 		$path.setAttribute('stroke', Settings.wayColor) //цвет линии
 		$path.setAttribute('stroke-width', Settings.wayWidth) //ширина линии
-		$path.setAttribute('marker-start', 'url(#start-dot)') //маркер начала - кружочек
 		$path.classList.add('way-path')
 		this.$svg.prepend($path) //добавляем path в свг
 		setTimeout(function () { //через секунду - когда линия полностью нарисуется добавить маркер конца - стрелочку
+			$path.setAttribute('marker-start', 'url(#start-dot)') //маркер начала - кружочек
 			$path.setAttribute('marker-end', 'url(#start-dot)') //sdafasdfasdfasdf
 		}, 1000)
 		console.log($path)
