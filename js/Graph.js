@@ -397,14 +397,14 @@ export class Graph {
 				vertex.type = 'lift' // Тип лифтов
 			} else if (vertex.id.indexOf('stair') > 0) {
 				vertex.type = 'stair' // Тип лестниц
-			} else if (vertex.id.indexOf('campusTransition') > 0) {
-				vertex.type = 'campusTransition' // Тип перехода между копрусами
+			} else if (vertex.id.indexOf('corpusTransition') > 0) {
+				vertex.type = 'corpusTransition' // Тип перехода между копрусами
 			} else if (vertex.neighboringIDs.size > 1 && vertex.type === 'entrancesToAu') {
-				vertex.type = 'transitAu' // Тип проходных помещений
+				vertex.type = 'crossingSpace' // Тип проходных помещений
 			}
 		}
 		let groupedVertexes = this.vertexes.reduce((acc, vertex) => {
-			let key = vertex.type === 'lift' || vertex.type === 'stair' || vertex.type === 'campusTransition' || vertex.type === 'transitAu'  ? 'С измененным типом' : 'С неизмененным типом';
+			let key = vertex.type === 'lift' || vertex.type === 'stair' || vertex.type === 'corpusTransition' || vertex.type === 'crossingSpace'  ? 'С измененным типом' : 'С неизмененным типом';
 			acc[key] = acc[key] || [];
 			acc[key].push(vertex);
 			return acc;
@@ -454,8 +454,8 @@ export class Graph {
 			return (vertex.type === 'hallway' ||
 				vertex.type === 'lift' ||
 				vertex.type === 'stair' ||
-				vertex.type === 'campusTransition' ||
-				vertex.type === 'transitAu' ||
+				vertex.type === 'corpusTransition' ||
+				vertex.type === 'crossingSpace' ||
 				vertex.id === idVertex1 ||
 				vertex.id === idVertex2 ||
 				Settings.throughPassVertexes.includes(vertex.id)
