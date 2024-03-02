@@ -11,7 +11,9 @@ export class DragHandler {
 		this.$bPlus = $bPlus;
 		this.$bMinus = $bMinus;
 		this.$wrapper = $wrapper
+		// let logger = document.getElementsByClassName('logger')[0]
 		let currentScale = 1
+		let da = this
 		
 		//слушатели нажатия на мышь или экран
 		this.$wrapper.addEventListener('mousedown', startMove)
@@ -24,20 +26,36 @@ export class DragHandler {
 			let startTop = $dragAble.offsetTop
 			let startX = eventMD.type === 'mousedown' ? eventMD.clientX : eventMD.touches[0].clientX
 			let startY = eventMD.type === 'mousedown' ? eventMD.clientY : eventMD.touches[0].clientY
-			
+			let startDistance
+			let startScale = currentScale
+			if(eventMD.type === 'touchstart' && eventMD.touches.length === 2){
+				startDistance = ((eventMD.touches[1].clientY-eventMD.touches[0].clientY)**2+(eventMD.touches[1].clientX-eventMD.touches[0].clientX)**2)**0.5
+				$scaleAble.classList.add('no-scale-able')
+				eventMD.preventDefault()
+			}
 			//устанавливаем слушатели на перемещение
 			document.addEventListener('mousemove', onMouseMove)
 			document.addEventListener('touchmove', onMouseMove)
 			
 			//при перемещении
 			function onMouseMove(eventMM) {
+				eventMM.preventDefault()
 				$dragAble.style.pointerEvents = 'none' //отключаем возможность нажатия/выделения
+				if(eventMM.type === 'mousemove' || (eventMM.type === 'touchmove' && eventMM.touches.length === 1)){
+				
 				//считаем текущие координаты касания/нажатия
 				let clientX = eventMM.type === 'mousemove' ? eventMM.clientX : eventMM.touches[0].clientX
 				let clientY = eventMM.type === 'mousemove' ? eventMM.clientY : eventMM.touches[0].clientY
+				console.log(eventMM.touches)
 				//перемещаем с учетом масштаба
 				$dragAble.style.top = `${(clientY - startY) / currentScale + startTop}px`
 				$dragAble.style.left = `${(clientX - startX) / currentScale + startLeft}px`
+				}
+				else if(eventMM.type === 'touchmove' && eventMM.touches.length === 2){
+					let distance = ((eventMM.touches[1].clientY-eventMM.touches[0].clientY)**2+(eventMM.touches[1].clientX-eventMM.touches[0].clientX)**2)**0.5
+					// logger.innerHTML = `${startDistance.toFixed(0)}<br>${distance.toFixed(0)}`
+					setScale((distance-startDistance)/50+startScale)
+				}
 			}
 			
 			//слушатели отпускания мыши/пальца
@@ -53,18 +71,24 @@ export class DragHandler {
 				document.removeEventListener('mouseup', moveEnd)
 				document.removeEventListener('touchend', moveEnd)
 				document.removeEventListener('touchcancel', moveEnd)
-				
+				$scaleAble.classList.remove('no-scale-able')
 			}
 		}
 		
 		//слушатели нажатия на кнопки масштаба
-		this.$bPlus.addEventListener('click', () => scale(this, 1.8))
-		this.$bMinus.addEventListener('click', () => scale(this, 1 / 1.8))
+		this.$bPlus.addEventListener('click', () => scale(1.8))
+		this.$bMinus.addEventListener('click', () => scale(1 / 1.8))
 		
 		//функция масштабирует масштабируемый объект
-		function scale(dragHandler, scaleValue) {
+		function scale(scaleValue) {
 			let newScale = Math.round((currentScale * scaleValue) * 100) / 100;
-			dragHandler.$scaleAble.style.transform = `scale(${newScale})`
+			setScale(newScale)
+		}
+		
+		function setScale(newScale) {
+			if(newScale < 0.75) newScale=0.75
+			if(newScale > 7) newScale=7
+			da.$scaleAble.style.transform = `scale(${newScale})`
 			currentScale = newScale
 		}
 		
@@ -72,13 +96,13 @@ export class DragHandler {
 		$wrapper.addEventListener('wheel', function (eventWH) {
 			wheelSum+=eventWH.wheelDelta
 			if(Math.abs(wheelSum) > 200 ) {
-				if (eventWH.wheelDelta > 0) scale(this, 1.5)
-				else if (eventWH.wheelDelta < 0) scale(this, 1 / 1.5)
+				if (eventWH.wheelDelta > 0) scale(1.5)
+				else if (eventWH.wheelDelta < 0) scale(1 / 1.5)
 				wheelSum = 0
 			}
 			else if(Math.abs(wheelSum) > 120 ) {
-				if (eventWH.wheelDelta > 0) scale(this, 1.15)
-				else if (eventWH.wheelDelta < 0) scale(this, 1 / 1.15)
+				if (eventWH.wheelDelta > 0) scale(1.15)
+				else if (eventWH.wheelDelta < 0) scale(1 / 1.15)
 				wheelSum = 0
 			}
 		}.bind(this))

@@ -72,6 +72,10 @@ body {
 	-ms-transition: all .25s ease-out;
 }
 
+.no-scale-able {
+	transition: none;
+}
+
 .menu {
 	display: flex;
 	flex-direction: column;
