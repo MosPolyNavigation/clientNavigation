@@ -36,7 +36,6 @@ export class Graph {
 	rawEdges = [] //сырой список рёбер со свойствами
 	edges = []
 	$graphObject
-	auditoriumsVertexesMap = new Map()
 	
 	constructor($graphObject) {
 		this.$graphObject = $graphObject
@@ -379,15 +378,12 @@ export class Graph {
 						if(edge.idVertex2===oldVertexId) edge.idVertex2=vertex.id
 					}
 					vertex.type = 'entrancesToAu'
-					this.auditoriumsVertexesMap.set(auditoriumID, vertex.id)
 				}
 			}
 			else {
 				`Не найдена точка входа с айди${entranceID}, поправьте таблицу ассоциаций`
 			}
 		}
-		console.log('Вершины аудиторий')
-		console.log(this.auditoriumsVertexesMap)
 	}
 	
 	defineVertexesTypes() {
