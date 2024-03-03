@@ -111,3 +111,9 @@ document.querySelector('.build-way').addEventListener('click', () => {
 document.querySelector('.hide-graph').addEventListener('click', () => {
 	graph.$graphObject.style.visibility = 'hidden'
 })
+
+document.querySelector('.assign-type').addEventListener('click',() =>{
+	let vertexId = graph.getVertexByID(document.getElementById('input-idPointType').value)
+	vertexId.type = document.getElementById('input-type').value
+	console.log(graph.vertexes)
+})

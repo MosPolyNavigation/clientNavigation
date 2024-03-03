@@ -255,7 +255,7 @@ input {
 	display: inline-block;
 }
 
-.selector-auditoriums, .select-points {
+.selector-auditoriums, .select-points, .select-type {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
