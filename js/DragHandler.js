@@ -46,7 +46,6 @@ export class DragHandler {
 				//считаем текущие координаты касания/нажатия
 				let clientX = eventMM.type === 'mousemove' ? eventMM.clientX : eventMM.touches[0].clientX
 				let clientY = eventMM.type === 'mousemove' ? eventMM.clientY : eventMM.touches[0].clientY
-				console.log(eventMM.touches)
 				//перемещаем с учетом масштаба
 				$dragAble.style.top = `${(clientY - startY) / currentScale + startTop}px`
 				$dragAble.style.left = `${(clientX - startX) / currentScale + startLeft}px`
