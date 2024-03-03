@@ -117,3 +117,7 @@ document.querySelector('.assign-type').addEventListener('click',() =>{
 	vertexId.type = document.getElementById('input-type').value
 	console.log(graph.vertexes)
 })
+
+document.querySelector('.map-wrapper').onwheel = function() {
+	return false
+}
