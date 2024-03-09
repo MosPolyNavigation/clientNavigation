@@ -1,19 +1,16 @@
 export class Settings {
 	static auditoriumColor = '#3B3C41' //цвета аудиторий
-	static entrancesColors = ['#9CBBFF'] //цвета входов
-	static entrancesTag = 'circle' //тэг точек входа
 	static auditoriumsEntrances = new Map()
 	static auditoriumsRusNames = new Map()
 	static auditoriumsEngNames = new Map()
 	static throughPassVertexes = [] //Вершины со сквозным проходом (например аудитория со сквозным проходом)
 	
-	static planStyleLink = '../css/plan-style.css' //путь к таблице стилей для плана
-	
 	static planName = 'resources/plans/N/N-4.svg' //путь к плану
-	static graphName = 'resources/plans/N/N-4-GRAPH.svg' //путь к графу
+	// static graphName = 'resources/plans/N/N-4-GRAPH.svg' //путь к графу
 	
 	static wayColor = '#3CD288'
 	static wayWidth = '8px'
+	static vertexes = []
 }
 
 //ассоциации для сэмпла
@@ -39,10 +36,20 @@ for (const auditoriumsRusName of auditoriumsRusNames) {
 	let nameRusEng = [auditoriumsRusName[1], auditoriumsRusName[0]]
 	auditoriumsEngNames.push(nameRusEng)
 }
-console.log(auditoriumsEngNames)
+
 Settings.auditoriumsEngNames = new Map(auditoriumsEngNames)
 Settings.auditoriumsRusNames = new Map(auditoriumsRusNames)
 
 let throughPassVertexes = [
 ]
 Settings.throughPassVertexes = throughPassVertexes
+
+let JSONVertexesFloors = [
+	//n-4
+	'[{"id":"n-4_0","x":1580,"y":305,"type":"hallway","neighborData":[["n-4_15",103],["n-4_13",217],["n-4_51",208],["n-4-stair-2",45],["n-4-u-6",675]]},{"id":"n-4-u-6","x":1580,"y":980,"type":"crossingSpace","neighborData":[["n-4_0",675],["n-4_55",47]]},{"id":"n-4_2","x":380,"y":305,"type":"hallway","neighborData":[["n-4_21",100],["n-4-cowork-1",540],["n-4-stair-3",45]]},{"id":"n-4-cowork-1","x":920,"y":305,"type":"crossingSpace","neighborData":[["n-4_2",540],["n-4_4",2091],["n-4_17",351],["n-4_19",340]]},{"id":"n-4_4","x":3011,"y":305,"type":"hallway","neighborData":[["n-4_7",76],["n-4-cowork-1",2091],["n-4-lift-5",45]]},{"id":"n-4-lift-5","x":3011,"y":260,"type":"lift","neighborData":[["n-4_4",45]]},{"id":"n-4-lift-4","x":2935,"y":260,"type":"lift","neighborData":[["n-4_7",45]]},{"id":"n-4_7","x":2935,"y":305,"type":"hallway","neighborData":[["n-4_9",76],["n-4_4",76],["n-4-lift-4",45]]},{"id":"n-4-lift-3","x":2859,"y":260,"type":"lift","neighborData":[["n-4_9",45]]},{"id":"n-4_9","x":2859,"y":305,"type":"hallway","neighborData":[["n-4_36",74],["n-4_7",76],["n-4-lift-3",45]]},{"id":"n-411","x":2647,"y":260,"type":"entrancesToAu","neighborData":[["n-4_11",45]]},{"id":"n-4_11","x":2647,"y":305,"type":"hallway","neighborData":[["n-4_26",154],["n-4_35",133],["n-411",45]]},{"id":"n-4-lift-2","x":1797,"y":260,"type":"lift","neighborData":[["n-4_13",45]]},{"id":"n-4_13","x":1797,"y":305,"type":"hallway","neighborData":[["n-4_0",217],["n-4_32",140],["n-4-lift-2",45]]},{"id":"n-4-wcm-1","x":1477,"y":260,"type":"entrancesToAu","neighborData":[["n-4_15",45]]},{"id":"n-4_15","x":1477,"y":305,"type":"hallway","neighborData":[["n-4_17",206],["n-4_0",103],["n-4-wcm-1",45]]},{"id":"n-4-wcw-1","x":1271,"y":260,"type":"entrancesToAu","neighborData":[["n-4_17",45]]},{"id":"n-4_17","x":1271,"y":305,"type":"hallway","neighborData":[["n-4_15",206],["n-4-wcw-1",45],["n-4-cowork-1",351]]},{"id":"n-4-lift-7","x":580,"y":260,"type":"lift","neighborData":[["n-4_19",45]]},{"id":"n-4_19","x":580,"y":305,"type":"hallway","neighborData":[["n-4_59",59],["n-4-cowork-1",340],["n-4-lift-7",45]]},{"id":"n-4-lift-6","x":480,"y":260,"type":"lift","neighborData":[["n-4_21",45]]},{"id":"n-4_21","x":480,"y":305,"type":"hallway","neighborData":[["n-4_2",100],["n-4_59",41],["n-4-lift-6",45]]},{"id":"n-4_22","x":380,"y":205,"type":"hallway","neighborData":[["n-4-stair-3",55],["n-402",50]]},{"id":"n-4-stair-3","x":380,"y":260,"type":"stair","neighborData":[["n-4_22",55],["n-4_2",45]]},{"id":"n-402","x":330,"y":205,"type":"entrancesToAu","neighborData":[["n-4_22",50]]},{"id":"n-410","x":2493,"y":260,"type":"entrancesToAu","neighborData":[["n-4_26",45]]},{"id":"n-4_26","x":2493,"y":305,"type":"hallway","neighborData":[["n-4_28",240],["n-4_11",154],["n-4-u04",45],["n-410",45]]},{"id":"n-4-u04","x":2493,"y":350,"type":"entrancesToAu","neighborData":[["n-4_26",45]]},{"id":"n-4_28","x":2253,"y":305,"type":"hallway","neighborData":[["n-4_30",196],["n-4_26",240],["n-419",45]]},{"id":"n-419","x":2253,"y":350,"type":"entrancesToAu","neighborData":[["n-4_28",45]]},{"id":"n-4_30","x":2057,"y":305,"type":"hallway","neighborData":[["n-4_32",120],["n-4_28",196],["n-418",45]]},{"id":"n-418","x":2057,"y":350,"type":"entrancesToAu","neighborData":[["n-4_30",45]]},{"id":"n-4_32","x":1937,"y":305,"type":"hallway","neighborData":[["n-4_13",140],["n-4_30",120],["n-4-u-5",45]]},{"id":"n-4-u-5","x":1937,"y":350,"type":"entrancesToAu","neighborData":[["n-4_32",45]]},{"id":"n-4-stair-1","x":2780,"y":260,"type":"stair","neighborData":[["n-4_35",45]]},{"id":"n-4_35","x":2780,"y":305,"type":"hallway","neighborData":[["n-4_11",133],["n-4_36",5],["n-4-stair-1",45]]},{"id":"n-4_36","x":2785,"y":305,"type":"hallway","neighborData":[["n-4_37",628],["n-4_35",5],["n-4_9",74],["n-4_44",297]]},{"id":"n-4_37","x":2785,"y":933,"type":"hallway","neighborData":[["n-4_36",628],["n-4_47",126],["n-4-u-2",45]]},{"id":"n-4_38","x":2695,"y":1065,"type":"hallway","neighborData":[["n-4_39",132],["n-4-u-1",46]]},{"id":"n-4_39","x":2695,"y":933,"type":"hallway","neighborData":[["n-4_38",132],["n-4-u-2",45]]},{"id":"n-4-u-1","x":2741,"y":1065,"type":"entrancesToAu","neighborData":[["n-4_38",46]]},{"id":"n-4-u-2","x":2740,"y":933,"type":"crossingSpace","neighborData":[["n-4_39",45],["n-4_37",45]]},{"id":"n-4_42","x":2785,"y":737,"type":"hallway","neighborData":[["n-4_44",135],["n-4_47",70],["n-416",45]]},{"id":"n-416","x":2830,"y":737,"type":"entrancesToAu","neighborData":[["n-4_42",45]]},{"id":"n-4_44","x":2785,"y":602,"type":"hallway","neighborData":[["n-4_36",297],["n-4_42",135],["n-415",45]]},{"id":"n-415","x":2830,"y":602,"type":"entrancesToAu","neighborData":[["n-4_44",45]]},{"id":"n-4-u-3","x":2740,"y":807,"type":"entrancesToAu","neighborData":[["n-4_47",45]]},{"id":"n-4_47","x":2785,"y":807,"type":"hallway","neighborData":[["n-4_42",70],["n-4_37",126],["n-4-u-3",45]]},{"id":"n-4-stair-2","x":1580,"y":260,"type":"stair","neighborData":[["n-4_0",45]]},{"id":"n-4_49","x":1580,"y":777,"type":"hallway","neighborData":[["n-4_51",264],["n-4_55",156],["n-408",50]]},{"id":"n-408","x":1630,"y":777,"type":"entrancesToAu","neighborData":[["n-4_49",50]]},{"id":"n-4_51","x":1580,"y":513,"type":"hallway","neighborData":[["n-4_0",208],["n-4_49",264],["n-405",50],["n-406",50]]},{"id":"n-406","x":1630,"y":513,"type":"entrancesToAu","neighborData":[["n-4_51",50]]},{"id":"n-405","x":1530,"y":513,"type":"entrancesToAu","neighborData":[["n-4_51",50]]},{"id":"n-407","x":1530,"y":933,"type":"entrancesToAu","neighborData":[["n-4_55",50]]},{"id":"n-4_55","x":1580,"y":933,"type":"hallway","neighborData":[["n-4_49",156],["n-407",50],["n-409",50],["n-4-u-6",47]]},{"id":"n-409","x":1630,"y":933,"type":"entrancesToAu","neighborData":[["n-4_55",50]]},{"id":"n-4_57","x":521,"y":486,"type":"hallway","neighborData":[["n-4_59",181],["n-401",39]]},{"id":"n-401","x":560,"y":486,"type":"entrancesToAu","neighborData":[["n-4_57",39]]},{"id":"n-4_59","x":521,"y":305,"type":"hallway","neighborData":[["n-4_57",181],["n-4_21",41],["n-4_19",59]]}]',
+	'[]'
+]
+
+for (let JSONVertexesFloor of JSONVertexesFloors) {
+	Settings.vertexes.push(...JSON.parse(JSONVertexesFloor))
+}
