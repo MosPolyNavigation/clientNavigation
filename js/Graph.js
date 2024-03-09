@@ -407,6 +407,7 @@ export class Graph {
 		}, {});
 		console.table(groupedVertexes['С измененным типом'])
 	}
+	
 	makeNeighboringIDsAsArray() {
 		for (let vertex of this.vertexes) {
 			let intermediateArr = []
@@ -414,7 +415,7 @@ export class Graph {
 				intermediateArr.push([neighborId, this.getDistanceBetween2VertexesByID(vertex.id,neighborId)])
 			}
 			delete vertex.neighboringIDs
-			vertex['neighborData'] = intermediateArr
+			vertex.neighborData = [...intermediateArr]
 		}
 		console.log(this.vertexes)
 	}
@@ -451,7 +452,8 @@ export class Graph {
 	
 	getShortestWayFromTo(idVertex1, idVertex2) {
 		let start = Date.now()
-		let filteredVertexes = this.vertexes.filter((vertex) => {
+		
+		function isVertexNeedCheck(vertex){
 			return (vertex.type === 'hallway' ||
 				vertex.type === 'lift' ||
 				vertex.type === 'stair' ||
@@ -461,7 +463,9 @@ export class Graph {
 				vertex.id === idVertex2 ||
 				Settings.throughPassVertexes.includes(vertex.id)
 			)
-		})
+		}
+		
+		let filteredVertexes = this.vertexes.filter((vertex) => isVertexNeedCheck(vertex))
 		//Список вершин находящиеся только в коридорах
 		let distances = new Map() //расстояния до вершин от начальной точки (старта)
 		let ways = new Map() //маршруты из точек
@@ -483,20 +487,22 @@ export class Graph {
 
 			//релаксации для соседних вершин
 			let currentVertexDistance = distances.get(currentVertexID) //длина до обрабатываемой вершины
-			for (let neighborMap of this.getVertexByID(currentVertexID).neighborData) { //для всех айдишников соседей вершины по айди
+			for (let [neighborId, distanceToNeighbor] of this.getVertexByID(currentVertexID).neighborData) { //для всех айдишников соседей вершины по айди
+				if(!filteredVertexes.includes(this.getVertexByID(neighborId)))
+					continue
 				iterations[1]+=1
-				let distanceBetweenCurrentAndNeighbor = neighborMap[1]
+				let distanceBetweenCurrentAndNeighbor = distanceToNeighbor
 				//расстояние между обрабатываемой и соседней вершиной
-				let neighborDistance = distances.get(neighborMap[0]) //расстояние до соседней вершины от старта
+				let neighborDistance = distances.get(neighborId) //расстояние до соседней вершины от старта
 				
 				//если расстояние до обр верш + между соседней < расст до соседней вершины от старта
 				if (currentVertexDistance + distanceBetweenCurrentAndNeighbor < neighborDistance) {
 					//обновляем расстояние до соседней вершины
-					distances.set(neighborMap[0], currentVertexDistance + distanceBetweenCurrentAndNeighbor)
+					distances.set(neighborId, currentVertexDistance + distanceBetweenCurrentAndNeighbor)
 					//и путь для нёё, как путь до текущей вершины + текущая вершина
 					let wayToRelaxingVertex = Array.from(ways.get(currentVertexID))
 					wayToRelaxingVertex.push(currentVertexID)
-					ways.set(neighborMap[0], wayToRelaxingVertex)
+					ways.set(neighborId, wayToRelaxingVertex)
 				}
 				
 			}
