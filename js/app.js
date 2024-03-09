@@ -48,7 +48,7 @@ function processGraphAndPlan() {
 		graph.tracingCross()
 		graph.fillAuditoriumsVertexes(planHandler.AuditoriumsIdEntrancesId, planHandler.$svgPlan)
 		graph.defineVertexesTypes()
-		graph.makeVertexesAsMap()
+		graph.makeNeighboringIDsAsArray()
 	}
 }
 

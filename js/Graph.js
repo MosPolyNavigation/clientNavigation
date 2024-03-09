@@ -409,12 +409,17 @@ export class Graph {
 		}, {});
 		console.table(groupedVertexes['С измененным типом'])
 	}
-	makeVertexesAsMap() {
-		// let vertexesMap = new Map()
-		
-		
-
-		//this.vertexes = vertexesMap
+	
+	makeNeighboringIDsAsArray() {
+		for (let vertex of this.vertexes) {
+			let intermediateArr = []
+			for (let neighborId of vertex.neighboringIDs) {
+				intermediateArr.push([neighborId, this.getDistanceBetween2VertexesByID(vertex.id,neighborId)])
+			}
+			delete vertex.neighboringIDs
+			vertex.neighborData = [...intermediateArr]
+		}
+		console.log(this.vertexes)
 	}
 	
 	showGraph($graphMarkers, $similarElement) {
@@ -449,7 +454,8 @@ export class Graph {
 	
 	getShortestWayFromTo(idVertex1, idVertex2) {
 		let start = Date.now()
-		let filteredVertexes = this.vertexes.filter((vertex) => {
+		
+		function isVertexNeedCheck(vertex){
 			return (vertex.type === 'hallway' ||
 				vertex.type === 'lift' ||
 				vertex.type === 'stair' ||
@@ -459,7 +465,9 @@ export class Graph {
 				vertex.id === idVertex2 ||
 				Settings.throughPassVertexes.includes(vertex.id)
 			)
-		})
+		}
+		
+		let filteredVertexes = this.vertexes.filter((vertex) => isVertexNeedCheck(vertex))
 		//Список вершин находящиеся только в коридорах
 		let distances = new Map() //расстояния до вершин от начальной точки (старта)
 		let ways = new Map() //маршруты из точек
@@ -478,14 +486,15 @@ export class Graph {
 		while (finals.size !== filteredVertexes.length && !isEndVertexInFinals) { //пока не посетили все вершины (или пока не обнаружено, что
 			// граф не связный) или пока не обработана конечная вершина
 			iterations[0]+=1
-			
+
 			//релаксации для соседних вершин
 			let currentVertexDistance = distances.get(currentVertexID) //длина до обрабатываемой вершины
-			for (let neighborId of this.getVertexByID(currentVertexID).neighboringIDs) { //для всех айдишников соседей вершины по айди
+			for (let [neighborId, distanceToNeighbor] of this.getVertexByID(currentVertexID).neighborData) { //для всех айдишников соседей вершины по айди
+				if(!filteredVertexes.includes(this.getVertexByID(neighborId)))
+					continue
 				iterations[1]+=1
-				let distanceBetweenCurrentAndNeighbor = this.getDistanceBetween2VertexesByID(currentVertexID, neighborId)
+				let distanceBetweenCurrentAndNeighbor = distanceToNeighbor
 				//расстояние между обрабатываемой и соседней вершиной
-				
 				let neighborDistance = distances.get(neighborId) //расстояние до соседней вершины от старта
 				
 				//если расстояние до обр верш + между соседней < расст до соседней вершины от старта
