@@ -407,15 +407,16 @@ export class Graph {
 		}, {});
 		console.table(groupedVertexes['С измененным типом'])
 	}
-	makeNeighboringIDsAsMap() {
+	makeNeighboringIDsAsArray() {
 		for (let vertex of this.vertexes) {
-			let intermediateMap = new Map()
+			let intermediateArr = []
 			for (let neighborId of vertex.neighboringIDs) {
-				intermediateMap.set(neighborId, this.getDistanceBetween2VertexesByID(vertex.id,neighborId))
+				intermediateArr.push([neighborId, this.getDistanceBetween2VertexesByID(vertex.id,neighborId)])
 			}
 			delete vertex.neighboringIDs
-			vertex['neighboringIDs'] = intermediateMap
+			vertex['neighborData'] = intermediateArr
 		}
+		console.log(this.vertexes)
 	}
 	
 	showGraph($graphMarkers, $similarElement) {
@@ -482,7 +483,7 @@ export class Graph {
 
 			//релаксации для соседних вершин
 			let currentVertexDistance = distances.get(currentVertexID) //длина до обрабатываемой вершины
-			for (let neighborMap of this.getVertexByID(currentVertexID).neighboringIDs) { //для всех айдишников соседей вершины по айди
+			for (let neighborMap of this.getVertexByID(currentVertexID).neighborData) { //для всех айдишников соседей вершины по айди
 				iterations[1]+=1
 				let distanceBetweenCurrentAndNeighbor = neighborMap[1]
 				//расстояние между обрабатываемой и соседней вершиной
