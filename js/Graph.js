@@ -2,9 +2,9 @@ import {Settings} from "./Settings.js";
 
 class Vertex {
 	constructor(x, y, id = '', type = '') {
+		this.id = id
 		this.x = x
 		this.y = y
-		this.id = id
 		this.type = type
 		this.neighboringIDs = new Set()
 	}
@@ -36,14 +36,16 @@ export class Graph {
 	rawEdges = [] //сырой список рёбер со свойствами
 	edges = []
 	$graphObject
+	floorName = ''
 	
-	constructor($graphObject) {
+	constructor($graphObject, floorName) {
 		this.$graphObject = $graphObject
+		this.floorName = floorName.substring(floorName.lastIndexOf('/')+1, floorName.lastIndexOf('.svg')).toLowerCase()
 	}
 	
 	addVertexByXY(x, y, type = '') {
 		if (!this.getVertexByXY(x,y)) {
-			this.vertexes.push(new Vertex(x, y, String(this.vertexIdIterator), type))
+			this.vertexes.push(new Vertex(x, y, `${this.floorName}_${this.vertexIdIterator}`, type))
 			this.vertexIdIterator ++
 		}
 	} //добавляет вершину с координатами

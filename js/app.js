@@ -13,7 +13,7 @@ planHandler.setSelectorElements(document.querySelector('.selector'),
 	document.querySelector('.button-to'))
 
 let isGraphLoaded = false
-export let graph = new Graph(document.querySelector('.graph'))
+export let graph = new Graph(document.querySelector('.graph'), Settings.planName)
 graph.$graphObject.data = Settings.graphName
 graph.$graphObject.addEventListener('load', () => { //при загрузке плана
 	console.log('граф загружен', Date.now())
