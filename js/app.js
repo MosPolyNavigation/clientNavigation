@@ -6,7 +6,7 @@ import {DragHandler} from "./DragHandler.js";
 
 //обработчик карты, передаем объект содержащий карту
 export let planHandler = new PlanHandler(document.querySelector('.plan-object'))
-planHandler.$planObject.data = Settings.planName
+planHandler.$planObject.data = Settings.floors.get('N3')
 planHandler.setSelectorElements(document.querySelector('.selector'),
 	document.querySelector('.button-from'),
 	document.querySelector('.button-to'))
@@ -84,3 +84,12 @@ document.querySelector('.build-way').addEventListener('click', () => {
 document.querySelector('.map-wrapper').onwheel = function() {
 	return false
 }
+document.querySelector('.button-N3').addEventListener('click',()=>{
+	way.removeOldWays()
+	planHandler.$planObject.data = Settings.floors.get('N3')
+})
+document.querySelector('.button-N4').addEventListener('click',()=>{
+	way.removeOldWays()
+	planHandler.$planObject.data = Settings.floors.get('N4')
+
+})
