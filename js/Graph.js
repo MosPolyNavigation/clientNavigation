@@ -14,7 +14,7 @@ export class Graph {
 	vertexes = [] //список вершин
 	$graphObject
 	floorName = ''
-	
+
 	constructor(staticVertexes) {
 		for (let staticVertex of staticVertexes) {
 			this.vertexes.push(new Vertex(
@@ -27,23 +27,23 @@ export class Graph {
 		}
 		console.log(this.vertexes)
 	}
-	
+
 	// getVertexByXY(x, y) {
 	// 	return this.vertexes.find(vertex => {
 	// 		if(vertex.x === x && vertex.y === y) return true
 	// 	})
 	// } //возвращает объект вершины по координатам
-	
+
 	getVertexByID(id = '') {
 		return this.vertexes.find(vertex => {
-			if(vertex.id === id) return true
+			if (vertex.id === id) return true
 		})
 	} //возвращает объект вершины по id
-	
+
 	getShortestWayFromTo(idVertex1, idVertex2) {
 		let start = Date.now()
-		
-		function isVertexNeedCheck(vertex){
+
+		function isVertexNeedCheck(vertex) {
 			return (vertex.type === 'hallway' ||
 				vertex.type === 'lift' ||
 				vertex.type === 'stair' ||
@@ -54,7 +54,7 @@ export class Graph {
 				Settings.throughPassVertexes.includes(vertex.id)
 			)
 		}
-		
+
 		let filteredVertexes = this.vertexes.filter((vertex) => isVertexNeedCheck(vertex))
 		//Список вершин находящиеся только в коридорах
 		let distances = new Map() //расстояния до вершин от начальной точки (старта)
@@ -64,27 +64,27 @@ export class Graph {
 			ways.set(vertex.id, [])
 		}
 		distances.set(idVertex1, 0) //для начальной вершины длина пути = 0
-		
+
 		let finals = new Set() //вершины с окончательной длиной (обработанные вершины)
-		
+
 		let currentVertexID = idVertex1 //ид обрабатываемой вершины
 		// for (let i = 0; i < 2; i ++) {
 		let iterations = [0, 0] //счётчик количества итераций внешнего и внутреннего циклов
 		let isEndVertexInFinals = false //Флаг находится ли конечная вершина в обработанных
 		while (finals.size !== filteredVertexes.length && !isEndVertexInFinals) { //пока не посетили все вершины (или пока не обнаружено, что
 			// граф не связный) или пока не обработана конечная вершина
-			iterations[0]+=1
+			iterations[0] += 1
 
 			//релаксации для соседних вершин
 			let currentVertexDistance = distances.get(currentVertexID) //длина до обрабатываемой вершины
 			for (let [neighborId, distanceToNeighbor] of this.getVertexByID(currentVertexID).neighborData) { //для всех айдишников соседей вершины по айди
-				if(!filteredVertexes.includes(this.getVertexByID(neighborId)))
+				if (!filteredVertexes.includes(this.getVertexByID(neighborId)))
 					continue
-				iterations[1]+=1
+				iterations[1] += 1
 				let distanceBetweenCurrentAndNeighbor = distanceToNeighbor
 				//расстояние между обрабатываемой и соседней вершиной
 				let neighborDistance = distances.get(neighborId) //расстояние до соседней вершины от старта
-				
+
 				//если расстояние до обр верш + между соседней < расст до соседней вершины от старта
 				if (currentVertexDistance + distanceBetweenCurrentAndNeighbor < neighborDistance) {
 					//обновляем расстояние до соседней вершины
@@ -94,11 +94,11 @@ export class Graph {
 					wayToRelaxingVertex.push(currentVertexID)
 					ways.set(neighborId, wayToRelaxingVertex)
 				}
-				
+
 			}
-			
+
 			finals.add(currentVertexID) //помечаем текущую вершину как обработканную
-			if(currentVertexID === idVertex2)
+			if (currentVertexID === idVertex2)
 				isEndVertexInFinals = true
 			//поиск следующей обрабатываемой вершины (необработанная вершина с наименьшим расстоянием от начала)
 			let minDistance = Infinity
@@ -114,11 +114,11 @@ export class Graph {
 				break
 			currentVertexID = nextVertexID
 		}
-		
+
 		for (let [id, way] of ways) {
 			way.push(id)
 		}
-		
+
 		// console.log(distances)
 		// console.log(ways)
 		console.log(`Путь найден за ${Date.now() - start} миллисекунд с количеством итераций ${iterations[0]}, ${iterations[1]} и количеством вершин ${filteredVertexes.length}`)
@@ -126,5 +126,22 @@ export class Graph {
 			way: ways.get(idVertex2),
 			distance: Math.floor(distances.get(idVertex2))
 		}
+	}
+	splitArraysByfloors(waysMap) {
+		let resultArrays = new Map();
+
+		waysMap.way.forEach(vertex => {
+			let thirdChar = vertex[2];
+			let firstChar = vertex[0];
+			let combinedKey = `${firstChar}${thirdChar}`;
+
+			if (!resultArrays.has(combinedKey)) {
+				resultArrays.set(combinedKey, []);
+			}
+			resultArrays.get(combinedKey).push(vertex);
+		});
+		resultArrays.set('distance',waysMap.distance)
+
+		return resultArrays;
 	}
 }

@@ -56,6 +56,7 @@ document.querySelector('.get-way').addEventListener('click', () => {
 		outputContent += `→ ${vertexId} `
 	})
 	outputContent = outputContent.substring(2)
+	console.log(outputContent)
 	outputContent += `<br>Длина: ${wayAndDistance.distance}`
 	
 	let $output = document.getElementsByClassName('output-found-way')[0]
@@ -64,7 +65,8 @@ document.querySelector('.get-way').addEventListener('click', () => {
 	
 })
 
-document.querySelector('.build-way').addEventListener('click', () => {
+document.querySelector('.build-way').addEventListener('click',visualGraph)
+function visualGraph(){
 	let idVertex1 = planHandler.fromId
 	let idVertex2 = planHandler.toId
 	let wayAndDistance = graph.getShortestWayFromTo(idVertex1, idVertex2)
@@ -77,9 +79,26 @@ document.querySelector('.build-way').addEventListener('click', () => {
 	
 	let $output = document.getElementsByClassName('output-way-between-au')[0]
 	$output.innerHTML = outputContent
-	way.build(graph, wayAndDistance)
-	
-})
+	if (graph.splitArraysByfloors(wayAndDistance).size > 1) {
+		let activeFloor = planHandler.$planObject.data[planHandler.$planObject.data.length-7].toLowerCase() + planHandler.$planObject.data[planHandler.$planObject.data.length - 5]
+		let floorWays = graph.splitArraysByfloors(wayAndDistance)
+		for (let key of floorWays.keys()) {
+			if (key === activeFloor) {
+				let wayAndDistanceFloor = {
+					way: graph.splitArraysByfloors(wayAndDistance).get(key),
+					distance: wayAndDistance.distance
+				}
+				way.build(graph,wayAndDistanceFloor)
+				console.log(wayAndDistanceFloor)
+			}
+		}
+	}
+	else {
+		way.build(graph, wayAndDistance)
+	}
+	console.log(graph.splitArraysByfloors(wayAndDistance).get('n3'))
+	console.log(typeof wayAndDistance)
+}
 
 document.querySelector('.map-wrapper').onwheel = function() {
 	return false
@@ -87,9 +106,11 @@ document.querySelector('.map-wrapper').onwheel = function() {
 document.querySelector('.button-N3').addEventListener('click',()=>{
 	way.removeOldWays()
 	planHandler.$planObject.data = Settings.floors.get('N3')
+	visualGraph()
 })
 document.querySelector('.button-N4').addEventListener('click',()=>{
 	way.removeOldWays()
 	planHandler.$planObject.data = Settings.floors.get('N4')
+	visualGraph()
 
 })
