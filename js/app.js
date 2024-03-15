@@ -79,38 +79,39 @@ function visualGraph(){
 	
 	let $output = document.getElementsByClassName('output-way-between-au')[0]
 	$output.innerHTML = outputContent
-	if (graph.splitArraysByfloors(wayAndDistance).size > 1) {
-		let activeFloor = planHandler.$planObject.data[planHandler.$planObject.data.length-7].toLowerCase() + planHandler.$planObject.data[planHandler.$planObject.data.length - 5]
-		let floorWays = graph.splitArraysByfloors(wayAndDistance)
+	if (graph.splitArraysByFloors(wayAndDistance, Settings.floors).size > 0 ) {
+		let activeFloor = planHandler.$planObject.data.substring(planHandler.$planObject.data.lastIndexOf('/') + 1, planHandler.$planObject.data.lastIndexOf('.svg')).replace('-', '');
+		let floorWays = graph.splitArraysByFloors(wayAndDistance, Settings.floors)
 		for (let key of floorWays.keys()) {
 			if (key === activeFloor) {
+				console.log(activeFloor)
 				let wayAndDistanceFloor = {
-					way: graph.splitArraysByfloors(wayAndDistance).get(key),
+					way: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key),
 					distance: wayAndDistance.distance
 				}
 				way.build(graph,wayAndDistanceFloor)
-				console.log(wayAndDistanceFloor)
+				console.clear()
+				console.log(graph.splitArraysByFloors(wayAndDistance, Settings.floors))
 			}
 		}
 	}
-	else {
-		way.build(graph, wayAndDistance)
-	}
-	console.log(graph.splitArraysByfloors(wayAndDistance).get('n3'))
-	console.log(typeof wayAndDistance)
+	// else {
+	// 	way.build(graph, wayAndDistance)
+	// }
+
 }
 
 document.querySelector('.map-wrapper').onwheel = function() {
 	return false
 }
 document.querySelector('.button-N3').addEventListener('click',()=>{
-	way.removeOldWays()
 	planHandler.$planObject.data = Settings.floors.get('N3')
+	way.removeOldWays()
 	visualGraph()
 })
 document.querySelector('.button-N4').addEventListener('click',()=>{
-	way.removeOldWays()
 	planHandler.$planObject.data = Settings.floors.get('N4')
+	way.removeOldWays()
 	visualGraph()
 
 })

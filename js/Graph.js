@@ -127,21 +127,26 @@ export class Graph {
 			distance: Math.floor(distances.get(idVertex2))
 		}
 	}
-	splitArraysByfloors(waysMap) {
+	splitArraysByFloors(waysMap,floorsMap) {
 		let resultArrays = new Map();
-
+		// Проходимся по каждой строке из массива
 		waysMap.way.forEach(vertex => {
-			let thirdChar = vertex[2];
-			let firstChar = vertex[0];
-			let combinedKey = `${firstChar}${thirdChar}`;
-
-			if (!resultArrays.has(combinedKey)) {
-				resultArrays.set(combinedKey, []);
+			// Преобразуем символы в верхний регистр
+			let symbol = vertex.toUpperCase().replace('-', '');
+			// Проходимся по каждому ключу из floorsMap
+			for (let [floorKey, floorValue] of floorsMap) {
+				// Если символ из начала строки соответствует ключу из floorsMap
+				symbol = symbol.substring(0,2)
+				if (symbol === floorKey) {
+					// Если для этого ключа еще нет подмассива, создаем его
+					if (!resultArrays.has(floorKey)) {
+						resultArrays.set(floorKey, []);
+					}
+					resultArrays.get(floorKey).push(vertex);
+				}
 			}
-			resultArrays.get(combinedKey).push(vertex);
 		});
-		resultArrays.set('distance',waysMap.distance)
-
+		resultArrays.set('distance', waysMap.distance);
 		return resultArrays;
 	}
 }
