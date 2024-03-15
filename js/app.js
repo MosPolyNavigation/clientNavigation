@@ -79,20 +79,16 @@ function visualGraph(){
 	
 	let $output = document.getElementsByClassName('output-way-between-au')[0]
 	$output.innerHTML = outputContent
-	if (graph.splitArraysByFloors(wayAndDistance, Settings.floors).size > 0 ) {
-		let activeFloor = planHandler.$planObject.data.substring(planHandler.$planObject.data.lastIndexOf('/') + 1, planHandler.$planObject.data.lastIndexOf('.svg')).replace('-', '');
-		let floorWays = graph.splitArraysByFloors(wayAndDistance, Settings.floors)
-		for (let key of floorWays.keys()) {
-			if (key === activeFloor) {
-				console.log(activeFloor)
-				let wayAndDistanceFloor = {
-					way: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key),
-					distance: wayAndDistance.distance
-				}
-				way.build(graph,wayAndDistanceFloor)
-				console.clear()
-				console.log(graph.splitArraysByFloors(wayAndDistance, Settings.floors))
+	let activeFloor = planHandler.$planObject.data.substring(planHandler.$planObject.data.lastIndexOf('/') + 1, planHandler.$planObject.data.lastIndexOf('.svg')).replace('-', '');
+	let floorWays = graph.splitArraysByFloors(wayAndDistance, Settings.floors)
+	for (let key of floorWays.keys()) {
+		if (key === activeFloor) {
+			console.log(activeFloor)
+			let wayAndDistanceFloor = {
+				way: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key),
+				distance: wayAndDistance.distance
 			}
+			way.build(graph, wayAndDistanceFloor)
 		}
 	}
 	// else {
