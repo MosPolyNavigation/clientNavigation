@@ -146,6 +146,16 @@ export class Graph {
 				}
 			}
 		});
+		// Считаем дистанцию пути на каждом этаже по отдельности
+		for (let [key, value] of resultArrays) {
+			let floorDistance = 0
+			for (let i = 0; i < value.length - 1; i++) {
+				let neighborArr = Settings.vertexes.find(obj => obj.id === value[i]).neighborData
+				floorDistance +=  neighborArr.find(subbaray => subbaray[0] === value[i+1])[1]
+			}
+			resultArrays.set(key,[value,floorDistance])
+
+		}
 		resultArrays.set('distance', waysMap.distance);
 		return resultArrays;
 	}

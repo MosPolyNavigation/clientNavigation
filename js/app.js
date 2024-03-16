@@ -83,10 +83,9 @@ function visualGraph(){
 	let floorWays = graph.splitArraysByFloors(wayAndDistance, Settings.floors)
 	for (let key of floorWays.keys()) {
 		if (key === activeFloor) {
-			console.log(activeFloor)
 			let wayAndDistanceFloor = {
-				way: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key),
-				distance: wayAndDistance.distance
+				way: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key)[0],
+				distance: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key)[1]
 			}
 			way.build(graph, wayAndDistanceFloor)
 		}
