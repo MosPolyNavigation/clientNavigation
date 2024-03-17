@@ -145,7 +145,7 @@ export class Graph {
 					resultArrays.get(floorKey).push(vertex);
 				}
 			}
-		});
+		})
 		// Считаем дистанцию пути на каждом этаже по отдельности
 		for (let [key, value] of resultArrays) {
 			let floorDistance = 0

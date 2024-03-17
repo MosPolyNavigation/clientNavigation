@@ -48,7 +48,6 @@ export function deactivateButton(buttonClassName) {
 document.querySelector('.get-way').addEventListener('click', () => {
 	let idVertex1 = document.getElementById('input-idPoint1').value
 	let idVertex2 = document.getElementById('input-idPoint2').value
-	
 	let wayAndDistance = graph.getShortestWayFromTo(idVertex1, idVertex2)
 	
 	let outputContent = ''
@@ -61,11 +60,17 @@ document.querySelector('.get-way').addEventListener('click', () => {
 	
 	let $output = document.getElementsByClassName('output-found-way')[0]
 	$output.innerHTML = outputContent
-	
+	visualGraph()
 	
 })
 
-document.querySelector('.build-way').addEventListener('click',visualGraph)
+document.querySelector('.build-way').addEventListener('click',() => {
+	let k = graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId)
+	if (graph.splitArraysByFloors(k,Settings.floors).size > 2) {
+		planHandler.$planObject.data = Settings.floors.get(graph.splitArraysByFloors(k, Settings.floors).keys().next().value)
+	}
+	visualGraph()
+})
 function visualGraph(){
 	let idVertex1 = planHandler.fromId
 	let idVertex2 = planHandler.toId
