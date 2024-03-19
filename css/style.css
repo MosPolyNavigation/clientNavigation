@@ -326,11 +326,14 @@ input {
 	fill: #4A5598;
 }
 
-.other-space.selected {
+.selected {
 	fill-opacity: .5;
 	filter: saturate(1.5);
 }
-
+.other-space.transit-animation {
+	fill-opacity: .5;
+	filter: saturate(3);
+}
 
 .selected-entrance {
 	fill-opacity: 1;
@@ -397,6 +400,7 @@ input {
 	padding-bottom: 6px;
 	pointer-events: auto;
 }
+
 .drag-able {
 	position: relative;
 	/*transition: all .03s linear;*/

@@ -19,6 +19,10 @@ planHandler.$planObject.addEventListener('load', () => { //при загрузк
 	console.log('план загружен', Date.now())
 	isPlanLoaded = true
 	processGraphAndPlan()
+	if(planHandler.fromId !== undefined && planHandler.toId !== undefined) {
+		visualGraph()
+		planHandler.$selector.classList.remove('showing-selector')
+	}
 })
 
 dragHandler = new DragHandler(
@@ -81,7 +85,7 @@ function visualGraph(){
 	})
 	outputContent = outputContent.substring(2)
 	outputContent += `<br>Длина: ${wayAndDistance.distance}`
-	
+
 	let $output = document.getElementsByClassName('output-way-between-au')[0]
 	$output.innerHTML = outputContent
 	let activeFloor = planHandler.$planObject.data.substring(planHandler.$planObject.data.lastIndexOf('/') + 1, planHandler.$planObject.data.lastIndexOf('.svg')).replace('-', '');
@@ -95,11 +99,18 @@ function visualGraph(){
 			way.build(graph, wayAndDistanceFloor)
 		}
 	}
-	// else {
-	// 	way.build(graph, wayAndDistance)
-	// }
-
+	let keysArr = Array.from(floorWays.keys())
+	let finishFloor = keysArr[keysArr.length-2]
+	let $buttonNextfloor = document.querySelector('.button-' + keysArr[keysArr.indexOf(activeFloor) + 1])
+	if (activeFloor !== finishFloor) {
+		let $transitAu = planHandler.auditoriums.get(floorWays.get(activeFloor)[0][floorWays.get(activeFloor)[0].length - 1])
+		$transitAu.classList.toggle('transit-animation')
+		$transitAu.addEventListener('click',()=>{
+			$buttonNextfloor.click()
+		})
+	}
 }
+
 
 document.querySelector('.map-wrapper').onwheel = function() {
 	return false
@@ -107,11 +118,8 @@ document.querySelector('.map-wrapper').onwheel = function() {
 document.querySelector('.button-N3').addEventListener('click',()=>{
 	planHandler.$planObject.data = Settings.floors.get('N3')
 	way.removeOldWays()
-	visualGraph()
 })
 document.querySelector('.button-N4').addEventListener('click',()=>{
 	planHandler.$planObject.data = Settings.floors.get('N4')
 	way.removeOldWays()
-	visualGraph()
-
 })
