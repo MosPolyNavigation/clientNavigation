@@ -330,7 +330,7 @@ input {
 	fill-opacity: .5;
 	filter: saturate(1.5);
 }
-.other-space.transit-animation {
+.other-space.transit-animation  {
 	fill-opacity: .5;
 	filter: saturate(3);
 }
@@ -399,6 +399,11 @@ input {
 .button-N3, .button-N4 {
 	padding-bottom: 6px;
 	pointer-events: auto;
+}
+.next-floor {
+	background-color: #78a88c;
+	fill-opacity: .10;
+	filter: saturate(2.5);
 }
 
 .drag-able {

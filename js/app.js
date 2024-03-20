@@ -21,8 +21,8 @@ planHandler.$planObject.addEventListener('load', () => { //при загрузк
 	processGraphAndPlan()
 	if(planHandler.fromId !== undefined && planHandler.toId !== undefined) {
 		visualGraph()
-		planHandler.$selector.classList.remove('showing-selector')
 	}
+	planHandler.$selector.classList.remove('showing-selector')
 })
 
 dragHandler = new DragHandler(
@@ -64,16 +64,19 @@ document.querySelector('.get-way').addEventListener('click', () => {
 	
 	let $output = document.getElementsByClassName('output-found-way')[0]
 	$output.innerHTML = outputContent
-	visualGraph()
+
 	
 })
 
 document.querySelector('.build-way').addEventListener('click',() => {
-	let k = graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId)
-	if (graph.splitArraysByFloors(k,Settings.floors).size > 2) {
-		planHandler.$planObject.data = Settings.floors.get(graph.splitArraysByFloors(k, Settings.floors).keys().next().value)
+	let k = graph.splitArraysByFloors(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId),Settings.floors)
+	if (k.size > 2) {
+		planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
+
 	}
-	visualGraph()
+	else {
+		visualGraph()
+	}
 })
 function visualGraph(){
 	let idVertex1 = planHandler.fromId
@@ -101,13 +104,18 @@ function visualGraph(){
 	}
 	let keysArr = Array.from(floorWays.keys())
 	let finishFloor = keysArr[keysArr.length-2]
-	let $buttonNextfloor = document.querySelector('.button-' + keysArr[keysArr.indexOf(activeFloor) + 1])
 	if (activeFloor !== finishFloor) {
+		let $buttonNextfloor = document.querySelector('.button-' + keysArr[keysArr.indexOf(activeFloor) + 1])
 		let $transitAu = planHandler.auditoriums.get(floorWays.get(activeFloor)[0][floorWays.get(activeFloor)[0].length - 1])
 		$transitAu.classList.toggle('transit-animation')
 		$transitAu.addEventListener('click',()=>{
 			$buttonNextfloor.click()
 		})
+		$buttonNextfloor.classList.toggle('next-floor')
+	}
+	if (floorWays.size <= 2) {
+		document.querySelector('.transit-animation').classList.remove('transit-animation')
+		document.querySelector('.next-floor').classList.remove('next-floor')
 	}
 }
 
@@ -118,8 +126,14 @@ document.querySelector('.map-wrapper').onwheel = function() {
 document.querySelector('.button-N3').addEventListener('click',()=>{
 	planHandler.$planObject.data = Settings.floors.get('N3')
 	way.removeOldWays()
+	document.querySelector('.next-floor').classList.remove('next-floor')
+
+
 })
 document.querySelector('.button-N4').addEventListener('click',()=>{
 	planHandler.$planObject.data = Settings.floors.get('N4')
 	way.removeOldWays()
+	document.querySelector('.button-N3').classList.remove('next-floor')
+	document.querySelector('.button-N4').classList.remove('next-floor')
+
 })
