@@ -22,7 +22,6 @@ planHandler.$planObject.addEventListener('load', () => { //при загрузк
 	if(planHandler.fromId !== undefined && planHandler.toId !== undefined) {
 		visualGraph()
 	}
-	planHandler.$selector.classList.remove('showing-selector')
 })
 
 dragHandler = new DragHandler(
@@ -72,7 +71,6 @@ document.querySelector('.build-way').addEventListener('click',() => {
 	let k = graph.splitArraysByFloors(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId),Settings.floors)
 	if (k.size > 2) {
 		planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
-
 	}
 	else {
 		visualGraph()
@@ -103,20 +101,25 @@ function visualGraph(){
 		}
 	}
 	let keysArr = Array.from(floorWays.keys())
+	let $transitAu = planHandler.auditoriums.get(floorWays.get(activeFloor)[0][floorWays.get(activeFloor)[0].length - 1])
 	let finishFloor = keysArr[keysArr.length-2]
 	if (activeFloor !== finishFloor) {
 		let $buttonNextfloor = document.querySelector('.button-' + keysArr[keysArr.indexOf(activeFloor) + 1])
-		let $transitAu = planHandler.auditoriums.get(floorWays.get(activeFloor)[0][floorWays.get(activeFloor)[0].length - 1])
 		$transitAu.classList.toggle('transit-animation')
+		$buttonNextfloor.classList.toggle('next-floor')
 		$transitAu.addEventListener('click',()=>{
 			$buttonNextfloor.click()
+			setTimeout(function() {
+				planHandler.$selector.classList.remove('showing-selector')
+			}, 20)
+
 		})
-		$buttonNextfloor.classList.toggle('next-floor')
 	}
 	if (floorWays.size <= 2) {
 		document.querySelector('.transit-animation').classList.remove('transit-animation')
 		document.querySelector('.next-floor').classList.remove('next-floor')
 	}
+	$transitAu.classList.toggle('final-animation')
 }
 
 

@@ -326,13 +326,16 @@ input {
 	fill: #4A5598;
 }
 
-.selected {
+.other-space.selected {
 	fill-opacity: .5;
 	filter: saturate(1.5);
 }
 .other-space.transit-animation  {
 	fill-opacity: .5;
 	filter: saturate(3);
+}
+.auditorium.final-animation {
+	fill: #1471cb;
 }
 
 .selected-entrance {
