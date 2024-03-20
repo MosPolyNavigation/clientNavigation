@@ -64,7 +64,6 @@ document.querySelector('.get-way').addEventListener('click', () => {
 	let $output = document.getElementsByClassName('output-found-way')[0]
 	$output.innerHTML = outputContent
 
-	
 })
 
 document.querySelector('.build-way').addEventListener('click',() => {
@@ -115,11 +114,19 @@ function visualGraph(){
 
 		})
 	}
-	if (floorWays.size <= 2) {
-		document.querySelector('.transit-animation').classList.remove('transit-animation')
-		document.querySelector('.next-floor').classList.remove('next-floor')
+	try {
+		document.querySelector('.final-animation').classList.remove('final-animation')
 	}
-	$transitAu.classList.toggle('final-animation')
+	catch {}
+	document.querySelector('#'+planHandler.toId).classList.toggle('final-animation')
+
+	try {
+		if (floorWays.size <= 2) {
+			document.querySelector('.transit-animation').classList.remove('transit-animation')
+			document.querySelector('.next-floor').classList.remove('next-floor')
+		}
+	}
+	catch {}
 }
 
 

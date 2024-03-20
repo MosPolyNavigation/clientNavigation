@@ -334,8 +334,9 @@ input {
 	fill-opacity: .5;
 	filter: saturate(3);
 }
-.auditorium.final-animation {
+.final-animation {
 	fill: #1471cb;
+	fill-opacity: 1;
 }
 
 .selected-entrance {
