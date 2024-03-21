@@ -51,7 +51,7 @@ body {
 .map-wrapper {
 	width: 80%;
 	height: 80%;
-	border: #3B3C41 solid 1px;
+	border: #3B3C41 solid 3px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -332,11 +332,16 @@ input {
 }
 .other-space.transit-animation  {
 	fill-opacity: .5;
-	filter: saturate(3);
+	filter: saturate(2);
 }
-.final-animation {
-	fill: #1471cb;
-	fill-opacity: 1;
+
+.auditorium.final-animation {
+	fill: #4f5994;
+}
+
+.other-space.final-animation {
+	fill-opacity: .5;
+	filter: saturate(2);
 }
 
 .selected-entrance {
