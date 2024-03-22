@@ -19,6 +19,7 @@ planHandler.$planObject.addEventListener('load', () => { //при загрузк
 	console.log('план загружен', Date.now())
 	isPlanLoaded = true
 	processGraphAndPlan()
+	planHandler.$selector.classList.remove('showing-selector')
 	if(planHandler.fromId !== undefined && planHandler.toId !== undefined) {
 		visualGraph()
 	}
