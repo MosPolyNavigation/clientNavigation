@@ -143,6 +143,10 @@ export class PlanHandler {
             this.fromId = this.currentAuId
         }
         this.onAuditoriumClicked(this.currentAuId, null)
+        let clickedAuditoriumEntranceId = this.AuditoriumsIdEntrancesId.get(this.fromId) //ид входа в нажатую аудиторию
+        for (const [entranceID, $entrance] of this.entrances) {
+            if (entranceID === clickedAuditoriumEntranceId) $entrance.classList.add('selected-entrance')
+        }
         if (this.fromId !== undefined && this.toId !== undefined) {
             document.querySelector('.build-way').click()
         }
@@ -156,7 +160,14 @@ export class PlanHandler {
             this.toId = this.currentAuId
         }
         this.onAuditoriumClicked(this.currentAuId, null)
+        let clickedAuditoriumEntranceId = this.AuditoriumsIdEntrancesId.get(this.toId) //ид входа в нажатую аудиторию
+        for (const [entranceID, $entrance] of this.entrances) {
+            if (entranceID === clickedAuditoriumEntranceId) $entrance.classList.add('selected-entrance')
+        }
         if (this.fromId !== undefined && this.toId !== undefined) {
+            for (const [entranceID, $entrance] of this.entrances) {
+                if (entranceID === clickedAuditoriumEntranceId) $entrance.classList.remove('selected-entrance')
+            }
             document.querySelector('.build-way').click()
         }
     }
@@ -169,8 +180,8 @@ export class PlanHandler {
 
         let clickedAuditoriumEntranceId = this.AuditoriumsIdEntrancesId.get(clickedAuId) //ид входа в нажатую аудиторию
         for (const [entranceID, $entrance] of this.entrances) {
-            if (entranceID !== clickedAuditoriumEntranceId) $entrance.classList.remove('selected-entrance')
-            else $entrance.classList.toggle('selected-entrance')
+            if (entranceID !== clickedAuditoriumEntranceId && this.AuditoriumsIdEntrancesId.get(this.fromId) !== entranceID) $entrance.classList.remove('selected-entrance')
+            else $entrance.classList.add('selected-entrance')
         }
 
         let isSelected = this.auditoriums.get(clickedAuId).classList.contains('selected')
