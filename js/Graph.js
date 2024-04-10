@@ -120,7 +120,7 @@ export class Graph {
 		}
 
 		// console.log(distances)
-		// console.log(ways)
+		console.log((idVertex2))
 		console.log(`Путь найден за ${Date.now() - start} миллисекунд с количеством итераций ${iterations[0]}, ${iterations[1]} и количеством вершин ${filteredVertexes.length}`)
 		return {
 			way: ways.get(idVertex2),
@@ -136,7 +136,7 @@ export class Graph {
 			// Проходимся по каждому ключу из floorsMap
 			for (let [floorKey, floorValue] of floorsMap) {
 				// Если символ из начала строки соответствует ключу из floorsMap
-				symbol = symbol.substring(0,2)
+				symbol = symbol.substring(0,floorKey.length)
 				if (symbol === floorKey) {
 					// Если для этого ключа еще нет подмассива, создаем его
 					if (!resultArrays.has(floorKey)) {
