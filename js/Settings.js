@@ -58,3 +58,4 @@ let JSONVertexesFloors = [
 for (let JSONVertexesFloor of JSONVertexesFloors) {
 	Settings.vertexes.push(...JSON.parse(JSONVertexesFloor))
 }
+

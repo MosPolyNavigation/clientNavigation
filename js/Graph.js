@@ -150,7 +150,7 @@ export class Graph {
 		for (let [key, value] of resultArrays) {
 			let floorDistance = 0
 			for (let i = 0; i < value.length - 1; i++) {
-				let neighborArr = Settings.vertexes.find(obj => obj.id === value[i]).neighborData
+				let neighborArr = this.getVertexByID(value[i]).neighborData
 				floorDistance +=  neighborArr.find(subbaray => subbaray[0] === value[i+1])[1]
 			}
 			resultArrays.set(key,[value,floorDistance])
@@ -158,5 +158,27 @@ export class Graph {
 		}
 		resultArrays.set('distance', waysMap.distance);
 		return resultArrays;
+	}
+	
+	addStairs(campuses) { //добавление связей между лестницами в графе по данным
+		console.groupCollapsed('Добавление лестниц')
+		for (const [campusId, campus] of campuses) {
+			for (let corpusID in campus.corpuses) {
+				for (let stairsGroup of campus.corpuses[corpusID].stairsGroups) {
+					for (let stairIndex = 1; stairIndex < stairsGroup.length; stairIndex ++) {
+						const stairId1 = stairsGroup[stairIndex-1];
+						const stairId2 = stairsGroup[stairIndex];
+						this.addNeighborBoth(stairId1, stairId2, 1085, 916)
+					}
+				}
+			}
+		}
+		console.groupEnd()
+	}
+	
+	addNeighborBoth(vertexId1, vertexId2, distance1to2, distance2to1) {
+		this.getVertexByID(vertexId1).neighborData.push([vertexId2,distance1to2])
+		this.getVertexByID(vertexId2).neighborData.push([vertexId1,distance2to1])
+		console.log(vertexId1, this.getVertexByID(vertexId1).neighborData, vertexId2, this.getVertexByID(vertexId2).neighborData)
 	}
 }

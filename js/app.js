@@ -3,6 +3,7 @@ import {PlanHandler} from './PlanHandler.js'
 import {Settings} from './Settings.js'
 import {Way} from './Way.js'
 import {DragHandler} from "./DragHandler.js";
+import Data from "./Data.js"
 
 //обработчик карты, передаем объект содержащий карту
 export let planHandler = new PlanHandler(document.querySelector('.plan-object'))
@@ -11,7 +12,14 @@ planHandler.setSelectorElements(document.querySelector('.selector'),
 	document.querySelector('.button-from'),
 	document.querySelector('.button-to'))
 
-export let graph = new Graph(Settings.vertexes)
+export let graph
+export let data = new Data()
+
+data.getData().then((a) => {
+	console.log('Создаю граф')
+	graph = new Graph(data.importedVertexes)
+	graph.addStairs(data.campuses)
+})
 
 let isPlanLoaded = false
 export let dragHandler
@@ -76,6 +84,7 @@ document.querySelector('.build-way').addEventListener('click',() => {
 		visualGraph()
 	}
 })
+
 function visualGraph(){
 	let idVertex1 = planHandler.fromId
 	let idVertex2 = planHandler.toId
