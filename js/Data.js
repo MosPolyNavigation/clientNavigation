@@ -1,15 +1,15 @@
-import NavData from "https://mospolynavigation.github.io/NavData/NavData.js"
+import NavData from "https://mospolynavigation.github.io/navigationData/NavData.js"
 
 export default class Data {
 	campuses = new Map()
 	plans = new Map()
 	status = false
 	importedVertexes = []
-	
+
 	constructor() {
-	
+
 	}
-	
+
 	async getData() {
 		function concatVertexesFromAllPlans(plans) {
 			let vertexes = []
@@ -18,7 +18,7 @@ export default class Data {
 			}
 			return vertexes
 		}
-		
+
 		await NavData.loadCampusesDataAsync().then(
 			resultData => {
 				this.plans = resultData.plans
