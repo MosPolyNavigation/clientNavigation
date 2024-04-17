@@ -211,4 +211,13 @@ export class PlanHandler {
         }
         this.$selector.setAttribute('auID', clickedAuId)
     }
+    removeButtonAnimation(){
+        let $arrFloorButtons = document.querySelectorAll('.floor-button')
+        $arrFloorButtons.forEach(function (button){
+            try {
+                button.classList.remove('next-floor')
+            }
+            catch {}
+        })
+    }
 }

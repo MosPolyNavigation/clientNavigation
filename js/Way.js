@@ -15,7 +15,6 @@ export class Way { //класс для обработки свг-пути
 	
 	build(graph, wayAndDistance) { //построить путь -
 		this.$endMarker.style.visibility = 'hidden'
-		this.removeOldWays()
 		let distance = wayAndDistance.distance
 		this.$svg.setAttribute('style', `stroke-dashoffset: ${distance}; stroke-dasharray: ${distance};`)
 		

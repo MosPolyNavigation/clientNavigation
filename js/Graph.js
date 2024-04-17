@@ -25,7 +25,6 @@ export class Graph {
 				[...staticVertex.neighborData]
 			))
 		}
-		console.log(this.vertexes)
 	}
 
 	// getVertexByXY(x, y) {
@@ -127,6 +126,17 @@ export class Graph {
 			distance: Math.floor(distances.get(idVertex2))
 		}
 	}
+	getArrayDistance(value) {
+		let floorDistance = 0
+		for (let i = 0; i < value.length - 1; i++) {
+			try {
+				let neighborArr = this.getVertexByID(value[i]).neighborData
+				floorDistance += neighborArr.find(subbaray => subbaray[0] === value[i + 1])[1]
+			}
+			catch (e) {}
+		}
+		return floorDistance
+	}
 	splitArraysByFloors(waysMap,floorsMap) {
 		let resultArrays = new Map();
 		// Проходимся по каждой строке из массива
@@ -148,13 +158,7 @@ export class Graph {
 		})
 		// Считаем дистанцию пути на каждом этаже по отдельности
 		for (let [key, value] of resultArrays) {
-			let floorDistance = 0
-			for (let i = 0; i < value.length - 1; i++) {
-				let neighborArr = this.getVertexByID(value[i]).neighborData
-				floorDistance +=  neighborArr.find(subbaray => subbaray[0] === value[i+1])[1]
-			}
-			resultArrays.set(key,[value,floorDistance])
-
+			resultArrays.set(key,[value,this.getArrayDistance(value)])
 		}
 		resultArrays.set('distance', waysMap.distance);
 		return resultArrays;
