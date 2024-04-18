@@ -19,6 +19,7 @@ data.getData().then((a) => {
 	console.log('Создаю граф')
 	graph = new Graph(data.importedVertexes)
 	graph.addStairs(data.campuses)
+	window.graph = graph
 })
 
 let isPlanLoaded = false
