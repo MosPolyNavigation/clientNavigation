@@ -5,6 +5,7 @@ import {Way} from './Way.js'
 import {DragHandler} from "./DragHandler.js";
 import Data from "./Data.js"
 import {Controller} from "./Controller.js";
+import {Route} from './Route.js'
 
 //обработчик карты, передаем объект содержащий карту
 export let planHandler = new PlanHandler(document.querySelector('.plan-object'))
@@ -15,6 +16,7 @@ planHandler.setSelectorElements(document.querySelector('.selector'),
 
 export let graph
 export let data = new Data()
+let route
 
 export let controller = new Controller()
 window.controller = controller
@@ -46,6 +48,7 @@ dragHandler = new DragHandler(
 	document.querySelector('.button-plus'),
 	document.querySelector('.button-minus'));
 
+	//////Добавить параметр следующий/предыдуший или обновление
 export function processGraphAndPlan(isObject = true, svgText = '', planData) {
 	console.log('план загружен', Date.now())
 	isPlanLoaded = true
@@ -85,15 +88,18 @@ document.querySelector('.get-way').addEventListener('click', () => {
 	$output.innerHTML = outputContent
 
 })
+
 document.querySelector('.build-way').addEventListener('click',() => {
 	way.removeOldWays()
-	let k = graph.splitArraysByFloors(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId),Settings.floors)
-	if (k.size > 2) {
-		planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
-	}
-	else {
+	route = new Route(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId))
+	// way.visualGraph(route)
+	// let k = graph.splitArraysByFloors(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId),Settings.floors)
+	// if (k.size > 2) {
+	// 	planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
+	// }
+	// else {
 		visualGraph()
-	}
+	// }
 })
 let $doubleFloor = ''
 function visualGraph(){
@@ -111,7 +117,9 @@ function visualGraph(){
 	let $output = document.getElementsByClassName('output-way-between-au')[0]
 	$output.innerHTML = outputContent
 
-	let activeFloor = planHandler.$planObject.data.substring(planHandler.$planObject.data.lastIndexOf('/') + 1, planHandler.$planObject.data.lastIndexOf('.svg')).replace('-', '');
+	let activeFloor = controller.getActivePlan()
+	// let activeFloor = planHandler.$planObject.data.substring(planHandler.$planObject.data.lastIndexOf('/') + 1, planHandler.$planObject.data.lastIndexOf('.svg')).replace('-', '');
+	console.log(activeFloor)
 	let floorWays = graph.splitArraysByFloors(wayAndDistance, Settings.floors)
 	let keysArr = Array.from(floorWays.keys())
 	let $buttonNextfloor = document.querySelector('.button-' + keysArr[keysArr.indexOf(activeFloor) + 1])

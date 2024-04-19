@@ -24,11 +24,20 @@ export default class Data {
 			resultData => {
 				this.plans = resultData.plans
 				this.campuses = resultData.campuses
+				this.#addPlansNamesToEveryVertexes()
 				this.importedVertexes = concatVertexesFromAllPlans(this.plans)
 				this.status = true
 				console.log('Данные загружены', this)
 			}
 		)
+	}
+	
+	#addPlansNamesToEveryVertexes() {
+		for (const [planName, planData] of this.plans) {
+			for (const importedVertex of planData.graph) {
+				importedVertex.planName = planName
+			}
+		}
 	}
 	
 	getPlan(planName = '') {

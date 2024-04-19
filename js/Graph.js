@@ -1,12 +1,13 @@
 import {Settings} from "./Settings.js";
 
 class Vertex {
-	constructor(x = 0, y = 0, id = '', type = '', neighborData = []) {
+	constructor(x = 0, y = 0, id = '', type = '', neighborData = [], planName = '') {
 		this.id = id
 		this.x = x
 		this.y = y
 		this.type = type
 		this.neighborData = neighborData
+		this.planName = planName
 	}
 }
 
@@ -20,7 +21,8 @@ export class Graph {
 				staticVertex.y,
 				staticVertex.id,
 				staticVertex.type,
-				[...staticVertex.neighborData]
+				[...staticVertex.neighborData],
+				staticVertex.planName
 			))
 		}
 	}
@@ -37,6 +39,10 @@ export class Graph {
 		})
 	} //возвращает объект вершины по id
 
+	getDistanceBetween2Vertexes(vertex1, vertex2){
+		return this.getVertexByID(vertex1).neighborData.find(note => note[0]===vertex2)[1]
+	}
+	
 	getShortestWayFromTo(idVertex1, idVertex2) {
 		let start = Date.now()
 
