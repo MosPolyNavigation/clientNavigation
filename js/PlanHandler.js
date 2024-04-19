@@ -21,46 +21,32 @@ export class PlanHandler {
         // this.$planWrapper = $mapObject.parentElement //внешний контейнер с картами
     }
 
-    onPlanLoad() { //при загрузки плана
+    onPlanLoad(isObject = true, svgText = '', planData) { //при загрузки плана
+        this.auditoriums = new Map() //Сброс
+        this.entrances = new Map()
+        this.AuditoriumsIdEntrancesId = new Map()
         //Удаление старого плана и перемещение svg загруженного плана в map-objects
-        let $planDocument = this.$planObject.contentDocument //получаем документа плана внутри <object>
-        this.$svgPlan = $planDocument.documentElement.cloneNode(true)//получаем корневой элемент svg
+        let $planDocument
+        if(isObject){
+            $planDocument = this.$planObject.contentDocument //получаем документа плана внутри <object>
+            this.$svgPlan = $planDocument.documentElement.cloneNode(true)//получаем корневой элемент svg
+            $planDocument.documentElement.remove() //удаляем всё из документа <object>
+        }
+        else {
+            console.log('adf')
+            let tempElement = document.createElement('div')
+            tempElement.innerHTML += svgText
+            this.$svgPlan = tempElement.firstChild.cloneNode(true)
+            console.log(this.$svgPlan)
+        }
         for(const $oldPlan of document.querySelectorAll('.plan'))
             $oldPlan.remove() //удаляем старый план
         this.$svgPlan.removeAttribute('width')
         this.$svgPlan.removeAttribute('height')
         this.$svgPlan.classList.add('plan')
+        
         this.$planObject.before(this.$svgPlan) //вставляем в map-objects загруженный план
-        $planDocument.documentElement.remove() //удаляем всё из документа <object>
         
-        // this.$svgPlan.parentElement.style.transform = `translateY(${Math.floor(wrapperHeight - height)/2}px)`
-        
-        // let test = document.createElement('div')
-        // test.classList.add("hello")
-
-
-        // let linkXmlToStylesheet = document.createElement('style') //тэг для задания стиля в свг
-        // linkXmlToStylesheet.innerHTML = `@import url(${Settings.planStyleLink});`
-        // //
-        // this.$svgPlan.prepend(linkXmlToStylesheet)
-        // // console.log()
-
-        // setTimeout(function () {
-        //     this.$planObject.style = 'visibility: visible'
-        // }.bind(this), 20)
-
-        // let planElements = this.$svgPlan.getElementsByTagName('*') //все элементы документа плана
-        // for (const $el of planElements) { //если элемент это аудитория - добавляем в аудитории
-        //     if ($el.tagName === 'circle' //если элемент - вход - добавляем в входы
-        //         && Settings.entrancesColors.includes($el.getAttribute('fill'))) {
-        //         this.entrances.set($el.id, $el)
-        //         $el.classList.add('entrance') //и добавляем соответствующий класс для
-        //         $el.setAttribute('fill-opacity', '0')
-        //     } else if (Settings.auditoriumsColors.includes($el.getAttribute('fill'))) {
-        //         this.auditoriums.set($el.id, $el)
-        //         $el.classList.add('auditorium') //и добавляем аудитории соответствующий класс, для подсветки
-        //     }
-        // }
         console.groupCollapsed('Помещения')
         for (let $space of this.$svgPlan.getElementById('Spaces').children) {
 			if($space.id.at(0) === "!")
@@ -93,10 +79,12 @@ export class PlanHandler {
             let height = Number($auditorium.getAttribute('height'))
             return (cx >= x && cx <= x + width && cy >= y && cy <= y + height)
         }
-
+        
+        let entrances = new Map(planData.entrances)
+        console.log(entrances)
         for (const [auditoriumId, $auditorium] of this.auditoriums) {
-            if (Settings.auditoriumsEntrances.get(auditoriumId) !== undefined) {
-                this.AuditoriumsIdEntrancesId.set(auditoriumId, Settings.auditoriumsEntrances.get(auditoriumId))
+            if (entrances.get(auditoriumId) !== undefined) {
+                this.AuditoriumsIdEntrancesId.set(auditoriumId, entrances.get(auditoriumId))
             } else {
                 for (const [entranceId, $entrance] of this.entrances) {
                     if (isEntranceOfAuditorium($entrance, $auditorium)) {

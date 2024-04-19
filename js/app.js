@@ -35,15 +35,9 @@ data.getData().then(() => {
 
 let isPlanLoaded = false
 export let dragHandler
-planHandler.$planObject.addEventListener('load', () => { //при загрузке плана
-	console.log('план загружен', Date.now())
-	isPlanLoaded = true
-	processGraphAndPlan()
-	planHandler.$selector.classList.remove('showing-selector')
-	if(planHandler.fromId !== undefined && planHandler.toId !== undefined) {
-		visualGraph()
-	}
-})
+// planHandler.$planObject.addEventListener('load', () => { //при загрузке плана
+// 	processGraphAndPlan()
+// })
 
 dragHandler = new DragHandler(
 	document.querySelector('.drag-able'),
@@ -52,10 +46,16 @@ dragHandler = new DragHandler(
 	document.querySelector('.button-plus'),
 	document.querySelector('.button-minus'));
 
-function processGraphAndPlan() {
+export function processGraphAndPlan(isObject = true, svgText = '', planData) {
+	console.log('план загружен', Date.now())
+	isPlanLoaded = true
 	if (isPlanLoaded) {
-		planHandler.onPlanLoad()
+		planHandler.onPlanLoad(isObject, svgText, planData)
 		way.setupWay(planHandler.$svgPlan)
+	}
+	planHandler.$selector.classList.remove('showing-selector')
+	if(planHandler.fromId !== undefined && planHandler.toId !== undefined) {
+		visualGraph()
 	}
 }
 

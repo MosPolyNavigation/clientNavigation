@@ -546,3 +546,16 @@ input[type=text] {
 .floors-switcher label:has(input[type=radio]:checked) {
 	background-color: #575764;
 }
+
+.info {
+position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 10;
+	font-size: small;
+	font-weight: 500;
+	color: #686877;
+	text-align: center;
+	pointer-events: none;
+	background-color: rgb(30, 30, 30, 50%);
+}

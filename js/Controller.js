@@ -1,3 +1,4 @@
+import {processGraphAndPlan} from './app.js'
 import {Settings} from './Settings.js'
 
 export class Controller {
@@ -28,6 +29,10 @@ export class Controller {
 	
 	getActiveCorpus() {
 		return this.switcherForm.elements.corpuses.value
+	}
+	
+	getActivePlan() {
+		return this.floorsSwitcherForm.elements.floors.value
 	}
 	
 	#clearCorpusesList() {
@@ -98,13 +103,19 @@ export class Controller {
 			this.changeCampus(campusId, data)
 		this.switcherForm.elements.corpuses.value = corpusId
 		this.#fillFloors(data)
+	for (const nodeLabel of this.floorsForm.getElementsByTagName('input')) {
+		nodeLabel.addEventListener('change', ev => this.changePlan(ev.target.value, data))
+	}
 	}
 	
-	changePlan(planName, data, planHandler) {
+	async changePlan(planName, data) {
 		let planData = data.getPlan(planName)
 		this.changeCorpus(planData.campus, planData.corpus, data)
 		this.floorsSwitcherForm.elements.floors.value = planName
-		planHandler.$planObject.data = `${Settings.dataServer}${planData.svgLink}`
-		console.log('План установлен')
+		let svgURL = `${Settings.dataServer}${planData.svgLink}`
+		console.log(`Загружаю план с ${svgURL}`)
+		let fetchPlanResponse = await fetch(svgURL)
+		let svgPlanTextContent = await fetchPlanResponse.text()
+		processGraphAndPlan(false, svgPlanTextContent, planData)
 	}
 }
