@@ -1,4 +1,5 @@
 import NavData from "https://mospolynavigation.github.io/navigationData/NavData.js"
+// import NavData from "http://127.0.0.1:5500/NavData.js"
 
 export default class Data {
 	campuses = new Map()
@@ -28,5 +29,9 @@ export default class Data {
 				console.log('Данные загружены', this)
 			}
 		)
+	}
+	
+	getPlan(planName = '') {
+		return this.plans.get(planName)
 	}
 }

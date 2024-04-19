@@ -4,10 +4,11 @@ import {Settings} from './Settings.js'
 import {Way} from './Way.js'
 import {DragHandler} from "./DragHandler.js";
 import Data from "./Data.js"
+import {Controller} from "./Controller.js";
 
 //обработчик карты, передаем объект содержащий карту
 export let planHandler = new PlanHandler(document.querySelector('.plan-object'))
-planHandler.$planObject.data = Settings.floors.get('N3')
+// planHandler.$planObject.data = Settings.floors.get('N3')
 planHandler.setSelectorElements(document.querySelector('.selector'),
 	document.querySelector('.button-from'),
 	document.querySelector('.button-to'))
@@ -15,11 +16,21 @@ planHandler.setSelectorElements(document.querySelector('.selector'),
 export let graph
 export let data = new Data()
 
-data.getData().then((a) => {
+export let controller = new Controller()
+window.controller = controller
+
+data.getData().then(() => {
 	console.log('Создаю граф')
 	graph = new Graph(data.importedVertexes)
 	graph.addStairs(data.campuses)
 	window.graph = graph
+	controller.setup(
+		document.querySelector('.switcher'),
+		document.querySelector('.floors-switcher'),
+		data,
+		Settings.defaultPlan,
+		planHandler
+	)
 })
 
 let isPlanLoaded = false

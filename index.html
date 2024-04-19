@@ -11,14 +11,14 @@
 	
 	<script defer src="./js/app.js" type="module"></script>
 	<script defer type="module">
-	  import {graph, planHandler, data} from "./js/app.js"
-	  import {Names} from "./js/Names.js"
-		import {Settings} from "./js/Settings.js";
-    
-    window.Names = Names
+	  import {planHandler, data} from './js/app.js'
+	  import {Names} from './js/Names.js'
+	  import {Settings} from './js/Settings.js'
+	  
+	  window.Names = Names
 	  window.planHandler = planHandler
-		window.settings = Settings
-		window.data = data
+	  window.settings = Settings
+	  window.data = data
 	</script>
 </head>
 <body>
@@ -47,12 +47,17 @@
 		<div class="scale-buttons">
 			<div class="button-plus button"><p>+</p></div>
 			<div class="button-minus button"><p>−</p></div>
-<!--			<div class="logger">12</div>-->
+			<!--			<div class="logger">12</div>-->
 		</div>
 		<div class="floors-buttons">
 			<div class="button-N4 button floor-button">4</div>
 			<div class="button-N3 button floor-button">3</div>
 		</div>
+		<form class="floors-switcher" action="">
+			<fieldset role="radiogroup" class="floors">
+			
+			</fieldset>
+		</form>
 	</div>
 	<div class="selector">
 		<div class="button-from button">
@@ -65,7 +70,21 @@
 		</div>
 	</div>
 	<div class="menu">
-		<div class="select-points">
+		
+		<div class="menus-group">
+			<form class="switcher" action="">
+				<fieldset role="radiogroup" class="campuses">
+					<legend>Кампусы</legend>
+				</fieldset>
+				<div class="divider"></div>
+				<fieldset role="radiogroup" class="corpuses">
+					<legend>Корпуса на БС</legend>
+				
+				</fieldset>
+			</form>
+		</div>
+		
+		<div class="menus-group">
 			<div class="input-row">
 				<label for="input-idPoint1">1:</label>
 				<input class="" id="input-idPoint1" name="idPoint1" type="text">
@@ -78,7 +97,7 @@
 			<p class="output-found-way"></p>
 		</div>
 		
-		<div class="selector-auditoriums">
+		<div class="menus-group">
 			<div class="input-row">
 				<label for="input-from"><img alt="" src="resources/img/from.svg"/></label>
 				<input id="input-from" name="input-from" placeholder="Откуда" type="text">
@@ -92,5 +111,7 @@
 		</div>
 	</div>
 </section>
+<form>
+</form>
 </body>
 </html>

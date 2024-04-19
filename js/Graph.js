@@ -12,8 +12,6 @@ class Vertex {
 
 export class Graph {
 	vertexes = [] //список вершин
-	$graphObject
-	floorName = ''
 
 	constructor(staticVertexes) {
 		for (let staticVertex of staticVertexes) {
