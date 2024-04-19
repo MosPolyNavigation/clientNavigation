@@ -97,6 +97,8 @@ export class Graph {
 			}
 
 			finals.add(currentVertexID) //помечаем текущую вершину как обработканную
+			// this.getVertexByID('n-3_5').neighborData = []
+			// this.getVertexByID('n-2-stair-3').neighborData = []
 			if (currentVertexID === idVertex2)
 				isEndVertexInFinals = true
 			//поиск следующей обрабатываемой вершины (необработанная вершина с наименьшим расстоянием от начала)
@@ -184,5 +186,35 @@ export class Graph {
 		this.getVertexByID(vertexId1).neighborData.push([vertexId2,distance1to2])
 		this.getVertexByID(vertexId2).neighborData.push([vertexId1,distance2to1])
 		console.log(vertexId1, this.getVertexByID(vertexId1).neighborData, vertexId2, this.getVertexByID(vertexId2).neighborData)
+	}
+	getStepRoute (floorMap) {
+		let firstStairIndex = floorMap.values().next().value[0].findIndex(element => this.getVertexByID(element).type === "stair")
+		if (firstStairIndex !== -1 && firstStairIndex !== floorMap.values().next().value[0].length - 1 && this.getVertexByID(floorMap.values().next().value[0][firstStairIndex + 1]).type === 'stair') {
+			let stepRoute = new Map()
+			stepRoute.set('activeStep', 0)
+			let keysArr = Array.from(floorMap.keys())
+			let valuesArr = Array.from(floorMap.values())
+			let steps = [
+				{
+					'plan': keysArr[0],
+					'way': valuesArr[0][0].slice(0, firstStairIndex + 1),
+					'distance': this.getArrayDistance(valuesArr[0][0].slice(0, firstStairIndex + 1))
+				},
+				{
+					'plan': keysArr[1],
+					'way': valuesArr[1][0],
+					'distance': valuesArr[1][1]
+				},
+				{
+					'plan': keysArr[0],
+					'way': valuesArr[0][0].slice(firstStairIndex + 1),
+					'distance': this.getArrayDistance(valuesArr[0][0].slice(firstStairIndex + 1))
+				}
+			]
+			stepRoute.set('steps',steps)
+			return stepRoute
+		} else {
+			return false
+		}
 	}
 }
