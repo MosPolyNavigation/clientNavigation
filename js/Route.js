@@ -35,10 +35,13 @@ export class Route {
 	}
 	changeActiveStep(activePlan) {
 		// if (this.steps[0].plan !== this.steps[2].plan) {
-		let indexNextPlan = this.steps.findIndex(element => element.plan === activePlan)
-		if (this.activeStep + 1 === indexNextPlan) {
-			this.activeStep += 1
-		}
+		// let indexNextPlan = this.steps.findIndex(element => element.plan === activePlan)
+		// if (this.activeStep + 1 === indexNextPlan) {
+		// 	this.activeStep += 1
+		// }
+		
+		if(this.steps[this.activeStep+1].plan === activePlan)
+			this.activeStep++
 		// else if (indexNextPlan < this.activeStep) {
 		// 	this.activeStep -=  1
 		// }

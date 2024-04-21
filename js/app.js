@@ -33,6 +33,10 @@ data.getData().then(() => {
 		Settings.defaultPlan,
 		planHandler
 	)
+	// graph.getVertexByID('n-4_27').neighborData = []
+	// graph.getVertexByID('n-4_25').neighborData = []
+	// graph.getVertexByID('n-2-stair-2').neighborData = []
+	// graph.getVertexByID('n-2-stair-1').neighborData = []
 })
 
 let isPlanLoaded = false
@@ -93,6 +97,7 @@ document.querySelector('.get-way').addEventListener('click', () => {
 document.querySelector('.build-way').addEventListener('click',() => {
 	way.removeOldWays()
 	route = new Route(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId))
+	window.route = route
 	document.querySelector(`label:has(input[value=${route.steps[route.activeStep].plan}])`).click()
 	// way.visualGraph(route)
 	// let k = graph.splitArraysByFloors(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId),Settings.floors)
@@ -100,9 +105,9 @@ document.querySelector('.build-way').addEventListener('click',() => {
 	// 	planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
 	// }
 	// else {
-	if (route.steps.length < 2) {
+	// if (route.steps.length < 2) {
 		way.visualGraph(route)
-	}
+	// }
 })
 
 
