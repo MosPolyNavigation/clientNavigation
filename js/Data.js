@@ -34,6 +34,7 @@ export default class Data {
 	
 	#addPlansNamesToEveryVertexes() {
 		for (const [planName, planData] of this.plans) {
+			console.log('Добавляю в общий граф', planName, planData.graph)
 			for (const importedVertex of planData.graph) {
 				importedVertex.planName = planName
 			}
