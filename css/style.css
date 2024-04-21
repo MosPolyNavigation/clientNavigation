@@ -520,7 +520,7 @@ input[type=text] {
 }
 
 .floors {
-
+	/*margin-left: -30px;*/
 }
 
 .floors-switcher fieldset {
