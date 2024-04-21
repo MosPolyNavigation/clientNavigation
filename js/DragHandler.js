@@ -1,3 +1,4 @@
+
 export class DragHandler {
 	$dragAble //Объект для премещения
 	$scaleAble //Объект для масштабирования в центр
@@ -6,6 +7,7 @@ export class DragHandler {
 	$bMinus //Кнопка уменьшить масштаб
 	
 	constructor($dragAble, $scaleAble, $wrapper, $bPlus, $bMinus) {
+		let oldComputedStyle = getComputedStyle($dragAble)
 		this.$dragAble = $dragAble
 		this.$scaleAble = $scaleAble;
 		this.$bPlus = $bPlus;
@@ -22,8 +24,27 @@ export class DragHandler {
 		//при нажатии
 		function startMove(eventMD) {
 			//запоминаем начальную позицию перемещаемого объекта и начальные координаты касания/нажатия
-			let startLeft = $dragAble.offsetLeft
-			let startTop = $dragAble.offsetTop
+			function getTransformTranslateXY(str) {
+				// Извлекаем все числа из строки с помощью регулярного выражения
+				const numbers = str.match(/-?\d+\.?\d*/g);
+				
+				// Проверяем, что найдено не менее двух чисел
+				if (numbers && numbers.length >= 2) {
+					// Возвращаем объект с ключами x и y, значениями которых являются два последних числа
+					return {
+						x: parseFloat(numbers[numbers.length - 2]),
+						y: parseFloat(numbers[numbers.length - 1]),
+					};
+				}
+				
+				// Если чисел менее двух, возвращаем null
+				return {x: 0, y: 0};
+			}
+			let startObjectXY = getTransformTranslateXY(getComputedStyle($dragAble).transform)
+			let startLeft = startObjectXY.x
+			let startTop = startObjectXY.y
+			// let startLeft = $dragAble.offsetLeft
+			// let startTop = $dragAble.offsetTop
 			let startX = eventMD.type === 'mousedown' ? eventMD.clientX : eventMD.touches[0].clientX
 			let startY = eventMD.type === 'mousedown' ? eventMD.clientY : eventMD.touches[0].clientY
 			let startDistance
@@ -47,8 +68,7 @@ export class DragHandler {
 				let clientX = eventMM.type === 'mousemove' ? eventMM.clientX : eventMM.touches[0].clientX
 				let clientY = eventMM.type === 'mousemove' ? eventMM.clientY : eventMM.touches[0].clientY
 				//перемещаем с учетом масштаба
-				$dragAble.style.top = `${(clientY - startY) / currentScale + startTop}px`
-				$dragAble.style.left = `${(clientX - startX) / currentScale + startLeft}px`
+				$dragAble.style.transform = `translate(${(clientX - startX) / currentScale + startLeft}px, ${(clientY - startY) / currentScale + startTop}px)`
 				}
 				else if(eventMM.type === 'touchmove' && eventMM.touches.length === 2){
 					let distance = ((eventMM.touches[1].clientY-eventMM.touches[0].clientY)**2+(eventMM.touches[1].clientX-eventMM.touches[0].clientX)**2)**0.5

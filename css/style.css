@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	border-collapse: collapse;
-	font-family: "Segoe UI", sans-serif;
+	font-family: "Inter", sans-serif;
 	border: 0;
 	vertical-align: center;
 
@@ -90,7 +92,7 @@ body {
 .button {
 	cursor: pointer;
 	font-size: inherit;
-	border-radius: 14px;
+	border-radius: 50px;
 	background-color: #232323;
 	text-decoration: none;
 	text-align: center;
@@ -389,6 +391,7 @@ input[type=text] {
 	font-size: large;
 	font-weight: bold;
 	pointer-events: none;
+	padding-top: 50px
 }
 
 .button-plus, .button-minus {
@@ -410,6 +413,7 @@ input[type=text] {
 	font-size: large;
 	font-weight: bold;
 	pointer-events: none;
+
 }
 
 .next-floor {
@@ -422,7 +426,7 @@ input[type=text] {
 	position: relative;
 	/*transition: all .03s linear;*/
 	/*-webkit-transition: all .03s linear;*/
-	-moz-transition: all .03s linear;
+	/*-moz-transition: all .03s linear;*/
 	/*-ms-transition: all .03s linear;*/
 }
 
@@ -524,7 +528,7 @@ input[type=text] {
 	/*width: 50px;*/
 	height: 100%;
 	top: 0;
-	left: 50px;
+	left: 10px;
 	/*background-color: #4A5598;*/
 	display: flex;
 	flex-direction: column;
@@ -534,6 +538,7 @@ input[type=text] {
 	font-size: large;
 	font-weight: bold;
 	pointer-events: none;
+	padding-top: 50px
 }
 
 .floors-switcher label {
@@ -555,4 +560,13 @@ position: absolute;
 	text-align: center;
 	pointer-events: none;
 	background-color: rgb(30, 30, 30, 50%);
+}
+
+.scale-buttons div, .floors-switcher label {
+	font-size: larger;
+	padding: 6px 0 0;
+	/*padding: 4px 12px 6px 12px;*/
+	width: 44px;
+	height: 44px;
+	text-align: center;
 }

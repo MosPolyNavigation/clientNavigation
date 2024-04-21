@@ -107,6 +107,16 @@ document.querySelector('.build-way').addEventListener('click',() => {
 
 
 
-document.querySelector('.map-wrapper').onwheel = function() {
+document.querySelector('.map-wrapper').onwheel = function(e) {
+	e.preventDefault()
+	return false
+}
+document.querySelector('.section-main').onwheel = function(e) {
+	e.preventDefault()
+	return false
+}
+document.querySelector('.section-main').ontouchmove = function(e) {
+	// e.preventDefault()
+	// document.querySelector('.section-main').innerHTML += e.target.tagName
 	return false
 }
