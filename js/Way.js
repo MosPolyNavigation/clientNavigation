@@ -57,7 +57,9 @@ export class Way { //класс для обработки свг-пути
 		let $output = document.getElementsByClassName('output-way-between-au')[0]
 		$output.innerHTML = outputContent
 		console.log(planHandler.auditoriums)
-		let activeFloor = controller.getActivePlan()
+		if (stepsObj.steps[stepsObj.activeStep].plan !== controller.getActivePlan()) {
+			return;
+		}
 		this.build(graph, stepsObj.steps[stepsObj.activeStep])
 		// Добавляем подсветку на кнопки этажей и лестницы
 		if (stepsObj.steps.length > 1 && stepsObj.steps[stepsObj.activeStep] !== stepsObj.steps.at(-1)) {
