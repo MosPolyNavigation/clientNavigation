@@ -4,10 +4,8 @@ export class Route {
 	activeStep
 	steps
 	fullDistance
-	
 	constructor(wayAndDistance) {
 		this.fullDistance = wayAndDistance.distance
-		console.log(wayAndDistance)
 		let way = [...wayAndDistance.way]
 		this.activeStep = 0
 		let firstVertex = graph.getVertexByID(way.shift())
@@ -32,10 +30,28 @@ export class Route {
 		//удаляем пустые этажи (обычно лестничный пролет)
 		this.steps = this.steps.filter(step => step.way.length>1)
 
-		
+
 		console.log(this)
 	}
-	
+	changeActiveStep(activePlan) {
+		// if (this.steps[0].plan !== this.steps[2].plan) {
+		let indexNextPlan = this.steps.findIndex(element => element.plan === activePlan)
+		if (this.activeStep + 1 === indexNextPlan) {
+			this.activeStep += 1
+		}
+		// else if (indexNextPlan < this.activeStep) {
+		// 	this.activeStep -=  1
+		// }
+		// }
+		// else {
+		// 	if (this.steps[this.activeStep].plan === this.steps[0].plan && this.steps[nextPlan].plan === this.steps[1].plan) {
+		// 		return this.activeStep = 1
+		// 	}
+		// 	else if (this.steps[this.activeStep].plan === this.steps[1].plan && this.steps[nextPlan].plan === this.steps[1].plan){
+		// 		return  this.activeStep = 3
+		// 	}
+		// }
+	}
 }
 
 class Step {

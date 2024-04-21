@@ -336,7 +336,7 @@ input[type=text] {
 	fill-opacity: .5;
 	filter: saturate(1.5);
 }
-.other-space.transit-animation  {
+.other-space.transit-light  {
 	fill-opacity: .5;
 	filter: saturate(2);
 }

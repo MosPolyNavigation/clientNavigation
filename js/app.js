@@ -58,7 +58,8 @@ export function processGraphAndPlan(isObject = true, svgText = '', planData) {
 	}
 	planHandler.$selector.classList.remove('showing-selector')
 	if(planHandler.fromId !== undefined && planHandler.toId !== undefined) {
-		visualGraph()
+		route.changeActiveStep(controller.getActivePlan())
+		way.visualGraph(route)
 	}
 }
 
@@ -92,116 +93,18 @@ document.querySelector('.get-way').addEventListener('click', () => {
 document.querySelector('.build-way').addEventListener('click',() => {
 	way.removeOldWays()
 	route = new Route(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId))
+	document.querySelector(`label:has(input[value=${route.steps[route.activeStep].plan}])`).click()
 	// way.visualGraph(route)
 	// let k = graph.splitArraysByFloors(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId),Settings.floors)
 	// if (k.size > 2) {
 	// 	planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
 	// }
 	// else {
-		visualGraph()
-	// }
+	if (route.steps.length < 2) {
+		way.visualGraph(route)
+	}
 })
-let $doubleFloor = ''
-function visualGraph(){
-	planHandler.removeButtonAnimation()
-	way.removeOldWays()
-	let idVertex1 = planHandler.fromId
-	let idVertex2 = planHandler.toId
-	let wayAndDistance = graph.getShortestWayFromTo(idVertex1, idVertex2)
-	let outputContent = ''
-	wayAndDistance.way.forEach(vertexId => {
-		outputContent += `→ ${vertexId} `
-	})
-	outputContent = outputContent.substring(2)
-	outputContent += `<br>Длина: ${wayAndDistance.distance}`
-	let $output = document.getElementsByClassName('output-way-between-au')[0]
-	$output.innerHTML = outputContent
 
-	let activeFloor = controller.getActivePlan()
-	// let activeFloor = planHandler.$planObject.data.substring(planHandler.$planObject.data.lastIndexOf('/') + 1, planHandler.$planObject.data.lastIndexOf('.svg')).replace('-', '');
-	console.log(activeFloor)
-	let floorWays = graph.splitArraysByFloors(wayAndDistance, Settings.floors)
-	let keysArr = Array.from(floorWays.keys())
-	let $buttonNextfloor = document.querySelector('.button-' + keysArr[keysArr.indexOf(activeFloor) + 1])
-	for (let key of floorWays.keys()) {
-		if (key === activeFloor) {
-			let wayAndDistanceFloor = {
-				way: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key)[0],
-				distance: graph.splitArraysByFloors(wayAndDistance, Settings.floors).get(key)[1]
-			}
-			let firstStairIndex = wayAndDistanceFloor.way.findIndex(element => graph.getVertexByID(element).type === "stair")
-			let firstArr = floorWays.get(floorWays.keys().next().value)[0]
-			let firstPreviousIndex = firstArr.findIndex(element => element.includes('stair'))
-			if (firstStairIndex !== -1 && firstStairIndex !== wayAndDistanceFloor.way.length - 1 && graph.getVertexByID(wayAndDistanceFloor.way[firstStairIndex + 1]).type === 'stair') {
-				$doubleFloor = document.querySelector('.button-' + keysArr[keysArr.indexOf(activeFloor)])
-				let firstPart = {
-					way: wayAndDistanceFloor.way.slice(0,firstStairIndex + 1),
-					distance: graph.getArrayDistance(wayAndDistanceFloor.way.slice(0,firstStairIndex + 1))
-				}
-				let secondPart = {
-					way: wayAndDistanceFloor.way.slice(firstStairIndex + 1),
-					distance: graph.getArrayDistance(wayAndDistanceFloor.way.slice(firstStairIndex + 1))
-				}
-
-				way.build(graph, firstPart)
-				way.build(graph, secondPart)
-
-				let $transitAuFirst = planHandler.auditoriums.get(firstPart.way[firstPart.way.length - 1])
-				$transitAuFirst.classList.toggle('transit-animation')
-				$transitAuFirst.addEventListener('click',()=>{
-					$buttonNextfloor.click()
-					setTimeout(function() {
-						planHandler.$selector.classList.remove('showing-selector')
-					}, 20)
-				})
-			}
-			else if (firstPreviousIndex !== -1 && firstPreviousIndex !== firstArr.length - 1 && graph.getVertexByID(firstArr[firstPreviousIndex + 1]).type === 'stair'){
-				way.build(graph, wayAndDistanceFloor)
-				$doubleFloor.classList.toggle('next-floor')
-				let $transitAuSecond = planHandler.auditoriums.get(wayAndDistanceFloor.way[wayAndDistanceFloor.way.length - 1])
-				$transitAuSecond.classList.toggle('transit-animation')
-				$transitAuSecond.addEventListener('click',()=>{
-					$doubleFloor.click()
-					setTimeout(function() {
-						planHandler.$selector.classList.remove('showing-selector')
-					}, 20)
-				})
-			}
-			else {
-				try {
-					$doubleFloor = ''
-					way.build(graph, wayAndDistanceFloor)
-					$doubleFloor.classList.remove('next-floor')
-				}
-				catch {}
-			}
-		}
-	}
-	let $transitAu = planHandler.auditoriums.get(floorWays.get(activeFloor)[0][floorWays.get(activeFloor)[0].length - 1])
-	let finishFloor = keysArr[keysArr.length-2]
-	if (graph.splitArraysByFloors(wayAndDistance, Settings.floors).size > 2 && finishFloor !== activeFloor) {
-		$transitAu.classList.toggle('transit-animation')
-		$buttonNextfloor.classList.toggle('next-floor')
-		$transitAu.addEventListener('click',()=>{
-			$buttonNextfloor.click()
-			setTimeout(function() {
-				planHandler.$selector.classList.remove('showing-selector')
-			}, 20)
-
-		})
-	}
-	try {
-		document.querySelector('.final-animation').classList.remove('final-animation')
-	}
-	catch {}
-	document.querySelector('#' + planHandler.toId).classList.toggle('final-animation')
-	try {
-		if (floorWays.size <= 2) {
-			document.querySelector('.transit-animation').classList.remove('transit-animation')
-		}
-	}
-	catch {}
-}
 
 
 document.querySelector('.map-wrapper').onwheel = function() {

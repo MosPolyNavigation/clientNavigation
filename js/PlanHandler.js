@@ -208,4 +208,27 @@ export class PlanHandler {
             catch {}
         })
     }
+    addLight(idStair, $nextFloorButton) {
+        $nextFloorButton.classList.toggle('next-floor')
+        let $stair = this.auditoriums.get(idStair)
+        $stair.classList.toggle('transit-light')
+        $stair.addEventListener('click',() => {
+            $nextFloorButton.click()
+            setTimeout(function () {
+                planHandler.$selector.classList.remove('showing-selector')
+            }, 20)
+        })
+
+    }
+    removeOldLights() {
+        this.auditoriums.forEach($auditorium => {
+            if ($auditorium.classList.contains('transit-light')) {
+                $auditorium.classList.remove('transit-light')
+            }
+            document.querySelectorAll('next-floor').forEach($button => {
+                $button.classList.remove('next-floor')
+            })
+        })
+
+    }
 }

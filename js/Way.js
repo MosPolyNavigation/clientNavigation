@@ -13,7 +13,7 @@ export class Way { //класс для обработки свг-пути
 		this.$endMarker = this.$svg.getElementById('end-arrow')
 	}
 	
-	build(graph, wayAndDistance) { //построить путь -
+	build(graph, wayAndDistance, wayOpacity) { //построить путь -
 		this.$endMarker.style.visibility = 'hidden'
 		let distance = wayAndDistance.distance
 		this.$svg.setAttribute('style', `stroke-dashoffset: ${distance}; stroke-dasharray: ${distance};`)
@@ -42,6 +42,26 @@ export class Way { //класс для обработки свг-пути
 	removeOldWays() {
 		for (const $oldPath of this.$svg.getElementsByClassName('way-path')) {
 			$oldPath.remove()
+		}
+	}
+
+	visualGraph(stepsObj) {
+		planHandler.removeOldLights()
+		this.removeOldWays()
+		let outputContent = ''
+		graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId).way.forEach(vertexId => {
+			outputContent += `→ ${vertexId} `
+		})
+		outputContent = outputContent.substring(2)
+		outputContent += `<br>Длина: ${stepsObj.fullDistance}`
+		let $output = document.getElementsByClassName('output-way-between-au')[0]
+		$output.innerHTML = outputContent
+		console.log(planHandler.auditoriums)
+		let activeFloor = controller.getActivePlan()
+		this.build(graph, stepsObj.steps[stepsObj.activeStep])
+		// Добавляем подсветку на кнопки этажей и лестницы
+		if (stepsObj.steps.length > 1 && stepsObj.steps[stepsObj.activeStep] !== stepsObj.steps.at(-1)) {
+			planHandler.addLight(stepsObj.steps[stepsObj.activeStep].way.at(-1),document.querySelector(`label:has(input[value=${stepsObj.steps[stepsObj.activeStep + 1].plan}])`))
 		}
 	}
 }
