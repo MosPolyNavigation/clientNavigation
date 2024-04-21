@@ -516,7 +516,7 @@ input[type=text] {
 }
 
 .floors {
-
+	/*margin-left: -30px;*/
 }
 
 .floors-switcher fieldset {
@@ -524,7 +524,7 @@ input[type=text] {
 	/*width: 50px;*/
 	height: 100%;
 	top: 0;
-	left: 50px;
+	left: 10px;
 	/*background-color: #4A5598;*/
 	display: flex;
 	flex-direction: column;
