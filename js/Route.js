@@ -39,8 +39,8 @@ export class Route {
 		// if (this.activeStep + 1 === indexNextPlan) {
 		// 	this.activeStep += 1
 		// }
-		
-		if(this.steps[this.activeStep+1].plan === activePlan)
+		console.log(this.steps[this.activeStep+1])
+		if(this.steps[this.activeStep+1] !== undefined && this.steps[this.activeStep+1].plan === activePlan)
 			this.activeStep++
 		// else if (indexNextPlan < this.activeStep) {
 		// 	this.activeStep -=  1
