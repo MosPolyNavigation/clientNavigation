@@ -411,10 +411,7 @@ input[type=text] {
 	font-weight: bold;
 	pointer-events: none;
 }
-.button-N3, .button-N4 {
-	padding-bottom: 6px;
-	pointer-events: auto;
-}
+
 .next-floor {
 	background-color: #78a88c;
 	fill-opacity: .10;

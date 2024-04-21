@@ -141,33 +141,7 @@ export class Graph {
 		}
 		return floorDistance
 	}
-	splitArraysByFloors(waysMap,floorsMap) {
-		let resultArrays = new Map();
-		// Проходимся по каждой строке из массива
-		waysMap.way.forEach(vertex => {
-			// Преобразуем символы в верхний регистр
-			let symbol = vertex.toUpperCase().replace('-', '');
-			// Проходимся по каждому ключу из floorsMap
-			for (let [floorKey, floorValue] of floorsMap) {
-				// Если символ из начала строки соответствует ключу из floorsMap
-				symbol = symbol.substring(0,floorKey.length)
-				if (symbol === floorKey) {
-					// Если для этого ключа еще нет подмассива, создаем его
-					if (!resultArrays.has(floorKey)) {
-						resultArrays.set(floorKey, []);
-					}
-					resultArrays.get(floorKey).push(vertex);
-				}
-			}
-		})
-		// Считаем дистанцию пути на каждом этаже по отдельности
-		for (let [key, value] of resultArrays) {
-			resultArrays.set(key,[value,this.getArrayDistance(value)])
-		}
-		resultArrays.set('distance', waysMap.distance);
-		return resultArrays;
-	}
-	
+
 	addStairs(campuses) { //добавление связей между лестницами в графе по данным
 		console.groupCollapsed('Добавление лестниц')
 		for (const [campusId, campus] of campuses) {

@@ -110,17 +110,3 @@ document.querySelector('.build-way').addEventListener('click',() => {
 document.querySelector('.map-wrapper').onwheel = function() {
 	return false
 }
-document.querySelector('.button-N3').addEventListener('click',()=>{
-	planHandler.$planObject.data = Settings.floors.get('N3')
-	way.removeOldWays()
-	document.querySelector('.next-floor').classList.remove('next-floor')
-
-
-})
-document.querySelector('.button-N4').addEventListener('click',()=>{
-	planHandler.$planObject.data = Settings.floors.get('N4')
-	way.removeOldWays()
-	document.querySelector('.button-N3').classList.remove('next-floor')
-	document.querySelector('.button-N4').classList.remove('next-floor')
-
-})
