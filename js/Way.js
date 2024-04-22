@@ -47,7 +47,6 @@ export class Way { //класс для обработки свг-пути
 
 	visualGraph(stepsObj) {
 		planHandler.removeOldLights()
-		console.log('СРАБОТАЛО')
 		this.removeOldWays()
 		let outputContent = ''
 		graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId).way.forEach(vertexId => {
