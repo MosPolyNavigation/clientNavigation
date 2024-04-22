@@ -99,8 +99,8 @@ document.querySelector('.build-way').addEventListener('click',() => {
 	route = new Route(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId))
 	window.route = route
 	console.clear()
-	console.log()
-	if (route.steps.length < 2 || (route.steps.length > 2 && route.steps[route.activeStep].plan === route.steps[0].plan)) {
+	console.log(route.steps.length, route.steps[route.activeStep].plan, route.steps[0].plan)
+	if (route.steps.length < 2 || (route.steps.length > 1 && route.steps[route.activeStep].plan === route.steps[0].plan)) {
 		way.visualGraph(route)
 	}
 	document.querySelector(`label:has(input[value=${route.steps[route.activeStep].plan}])`).click()
