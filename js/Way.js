@@ -47,7 +47,6 @@ export class Way { //класс для обработки свг-пути
 
 	visualGraph(stepsObj) {
 		planHandler.removeOldLights()
-		console.log('СРАБОТАЛО')
 		this.removeOldWays()
 		let outputContent = ''
 		graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId).way.forEach(vertexId => {
@@ -57,6 +56,7 @@ export class Way { //класс для обработки свг-пути
 		outputContent += `<br>Длина: ${stepsObj.fullDistance}`
 		let $output = document.getElementsByClassName('output-way-between-au')[0]
 		$output.innerHTML = outputContent
+		console.log(planHandler.auditoriums)
 		if (stepsObj.steps[stepsObj.activeStep].plan !== controller.getActivePlan()) {
 			return;
 		}

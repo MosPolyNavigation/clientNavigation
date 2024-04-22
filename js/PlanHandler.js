@@ -211,7 +211,6 @@ export class PlanHandler {
     addLight(idStair, $nextFloorButton) {
         $nextFloorButton.classList.toggle('next-floor')
         let $stair = this.auditoriums.get(idStair)
-        console.log($nextFloorButton)
         $stair.classList.toggle('transit-light')
         $stair.addEventListener('click',() => {
             $nextFloorButton.click()
@@ -226,10 +225,9 @@ export class PlanHandler {
             if ($auditorium.classList.contains('transit-light')) {
                 $auditorium.classList.remove('transit-light')
             }
-        })
-        console.log(document.querySelectorAll('.next-floor'))
-        document.querySelectorAll('.next-floor').forEach($button => {
-            $button.classList.remove('next-floor')
+            document.querySelectorAll('next-floor').forEach($button => {
+                $button.classList.remove('next-floor')
+            })
         })
 
     }

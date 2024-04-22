@@ -105,9 +105,9 @@ document.querySelector('.build-way').addEventListener('click',() => {
 	// 	planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
 	// }
 	// else {
-	if (route.steps.length < 2) {
-	 	way.visualGraph(route)
-	}
+	// if (route.steps.length < 2) {
+		way.visualGraph(route)
+	// }
 })
 
 
