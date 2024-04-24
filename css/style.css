@@ -417,9 +417,27 @@ input[type=text] {
 }
 
 .next-floor {
-	background-color: #78a88c;
-	fill-opacity: .10;
-	filter: saturate(2.5);
+	background-color: #5aa27f;
+	transition: all .5s ease;
+	animation:  next-floor-anim .8s .5s ease alternate infinite;
+}
+
+@keyframes next-floor-start {
+	0% {
+
+	}
+	100% {
+		background-color: #5aa27f;
+	}
+}
+
+@keyframes next-floor-anim {
+	0% {
+		background-color: #5aa27f;
+	}
+	100% {
+		background-color: #4a7761;
+	}
 }
 
 .drag-able {
@@ -543,6 +561,7 @@ input[type=text] {
 
 .floors-switcher label {
 	pointer-events: auto;
+
 }
 
 .floors-switcher label:has(input[type=radio]:checked) {
