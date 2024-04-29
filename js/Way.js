@@ -13,7 +13,7 @@ export class Way { //класс для обработки свг-пути
 		this.$endMarker = this.$svg.getElementById('end-arrow')
 	}
 	
-	build(graph, wayAndDistance, wayOpacity) { //построить путь -
+	build(graph, wayAndDistance, wayColor) { //построить путь -
 		this.$endMarker.style.visibility = 'hidden'
 		let distance = wayAndDistance.distance
 		this.$svg.setAttribute('style', `stroke-dashoffset: ${distance}; stroke-dasharray: ${distance};`)
@@ -27,10 +27,17 @@ export class Way { //класс для обработки свг-пути
 		
 		let $path = document.createElementNS('http://www.w3.org/2000/svg', 'path') //элемент path
 		$path.setAttribute('d', d) //устанавливаем путь в атрибут d
-		$path.setAttribute('stroke', Settings.wayColor) //цвет линии
-		$path.setAttribute('stroke-width', Settings.wayWidth) //ширина линии
-		$path.setAttribute('marker-start', 'url(#start-dot)') //маркер начала - кружочек
-		$path.setAttribute('marker-end', 'url(#end-arrow)')
+		$path.setAttribute('stroke', wayColor) //цвет линии
+		$path.setAttribute('stroke-width', Settings.wayWidth)//ширина линии
+		if (wayColor === '#6b6e6b') {
+			$path.setAttribute('marker-start', 'url(#start-dot-second)')
+			$path.setAttribute('marker-end', 'url(#end-arrow-second)')
+		}
+		else {
+			$path.setAttribute('marker-start', 'url(#start-dot)') //маркер начала - кружочек
+			$path.setAttribute('marker-end', 'url(#end-arrow)')
+		}
+
 		$path.classList.add('way-path')
 		this.$svg.prepend($path) //добавляем path в свг
 		setTimeout(function () { //через секунду - когда линия полностью нарисуется добавить маркер конца - стрелочку
@@ -47,6 +54,8 @@ export class Way { //класс для обработки свг-пути
 
 	visualGraph(stepsObj) {
 		planHandler.removeOldLights()
+		console.log('сработало')
+		this.removeOldWays()
 		this.removeOldWays()
 		let outputContent = ''
 		graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId).way.forEach(vertexId => {
@@ -60,7 +69,12 @@ export class Way { //класс для обработки свг-пути
 		if (stepsObj.steps[stepsObj.activeStep].plan !== controller.getActivePlan()) {
 			return;
 		}
-		this.build(graph, stepsObj.steps[stepsObj.activeStep])
+		stepsObj.steps.forEach(step => {
+			if (step.plan === stepsObj.steps[stepsObj.activeStep].plan && step.way !== stepsObj.steps[stepsObj.activeStep].way) {
+				this.build(graph,step, '#6b6e6b')
+			}
+		})
+		this.build(graph, stepsObj.steps[stepsObj.activeStep],'#3CD288')
 		// Добавляем подсветку на кнопки этажей и лестницы
 		if (stepsObj.steps.length > 1 && stepsObj.steps[stepsObj.activeStep] !== stepsObj.steps.at(-1)) {
 			planHandler.addLight(stepsObj.steps[stepsObj.activeStep].way.at(-1),document.querySelector(`label:has(input[value=${stepsObj.steps[stepsObj.activeStep + 1].plan}])`))

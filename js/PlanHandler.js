@@ -218,7 +218,6 @@ export class PlanHandler {
                 planHandler.$selector.classList.remove('showing-selector')
             }, 20)
         })
-
     }
     removeOldLights() {
         this.auditoriums.forEach($auditorium => {
