@@ -6,7 +6,7 @@ export class Settings {
 	static floors = new Map()
 	static wayColor = '#3CD288'
 	static wayWidth = '8px'
-	static defaultPlan = 'N-3'
+	static defaultPlan = 'A-0'
 	static dataServer = 'https://mospolynavigation.github.io/navigationData'
 	// static dataServer = 'http://127.0.0.1:5500'
 }
