@@ -98,18 +98,8 @@ document.querySelector('.build-way').addEventListener('click',() => {
 	way.removeOldWays()
 	route = new Route(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId))
 	window.route = route
-	if (route.steps.length < 2 || (route.steps.length > 2 && route.steps[route.activeStep].plan === route.steps[0].plan)) {
-		way.visualGraph(route)
-	}
+	controller.changePlan(route.steps[0].plan, data)
 	document.querySelector(`label:has(input[value=${route.steps[route.activeStep].plan}])`).click()
-	// way.visualGraph(route)
-	// let k = graph.splitArraysByFloors(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId),Settings.floors)
-	// if (k.size > 2) {
-	// 	planHandler.$planObject.data = Settings.floors.get(k.keys().next().value)
-	// }
-	// else {
-	// if (route.steps.length < 2) {
-	// }
 })
 
 

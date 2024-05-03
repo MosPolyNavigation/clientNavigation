@@ -53,6 +53,8 @@ export class Way { //класс для обработки свг-пути
 	}
 
 	visualGraph(stepsObj) {
+		console.clear()
+		console.log('Визуал запущен')
 		planHandler.removeOldLights()
 		this.removeOldWays()
 		this.removeOldWays()
@@ -64,25 +66,16 @@ export class Way { //класс для обработки свг-пути
 		outputContent += `<br>Длина: ${stepsObj.fullDistance}`
 		let $output = document.getElementsByClassName('output-way-between-au')[0]
 		$output.innerHTML = outputContent
-		// if (stepsObj.steps[stepsObj.activeStep].plan !== controller.getActivePlan()) {
-		// 	return;
-		// }
+	
 		stepsObj.steps.forEach(step => {
-			// if (step.plan === stepsObj.steps[stepsObj.activeStep].plan && step.way !== stepsObj.steps[stepsObj.activeStep].way) {
-			// 	this.build(graph,step, '#6b6e6b')
-			// }
 			if(stepsObj.steps[stepsObj.activeStep].way === step.way && step.plan === controller.getActivePlan()){
 				this.build(graph, step, '#3CD288' )
-				console.log('Не сработало')
 				console.log(step.plan, controller.getActivePlan(), stepsObj.steps[stepsObj.activeStep].way, step.way)
 			}
 			else if (step.plan === controller.getActivePlan()){
 				this.build(graph,step, '#6b6e6b')
-				console.clear()
-				console.log('СРАБОТАЛО')
 			}
 		})
-		// Добавляем подсветку на кнопки этажей и лестницы
 		if (stepsObj.steps.length > 1 && stepsObj.steps[stepsObj.activeStep] !== stepsObj.steps.at(-1)) {
 			planHandler.addLight(stepsObj.steps[stepsObj.activeStep].way.at(-1),document.querySelector(`label:has(input[value=${stepsObj.steps[stepsObj.activeStep + 1].plan}])`))
 		}

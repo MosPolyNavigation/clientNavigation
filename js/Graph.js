@@ -67,8 +67,8 @@ export class Graph {
 			ways.set(vertex.id, [])
 		}
 		distances.set(idVertex1, 0) //для начальной вершины длина пути = 0
-		// this.getVertexByID('n-3_28').neighborData = []
-		// this.getVertexByID('n-3_26').neighborData = []
+		this.getVertexByID('n-3_28').neighborData = []
+		this.getVertexByID('n-3_26').neighborData = []
 		let finals = new Set() //вершины с окончательной длиной (обработанные вершины)
 
 		let currentVertexID = idVertex1 //ид обрабатываемой вершины
