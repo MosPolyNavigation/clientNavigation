@@ -54,7 +54,8 @@ export class Graph {
 				vertex.type === 'crossingSpace' ||
 				vertex.id === idVertex1 ||
 				vertex.id === idVertex2 ||
-				Settings.throughPassVertexes.includes(vertex.id)
+				Settings.throughPassVertexes.includes(vertex.id) ||
+				vertex.id.includes('crossing')
 			)
 		}
 
@@ -131,23 +132,23 @@ export class Graph {
 			distance: Math.floor(distances.get(idVertex2))
 		}
 	}
-	getArrayDistance(value) {
-		let floorDistance = 0
-		for (let i = 0; i < value.length - 1; i++) {
-			try {
-				let neighborArr = this.getVertexByID(value[i]).neighborData
-				floorDistance += neighborArr.find(subbaray => subbaray[0] === value[i + 1])[1]
-			}
-			catch (e) {}
-		}
-		return floorDistance
-	}
+	// getArrayDistance(value) {
+	// 	let floorDistance = 0
+	// 	for (let i = 0; i < value.length - 1; i++) {
+	// 		try {
+	// 			let neighborArr = this.getVertexByID(value[i]).neighborData
+	// 			floorDistance += neighborArr.find(subArray => subArray[0] === value[i + 1])[1]
+	// 		}
+	// 		catch (e) {}
+	// 	}
+	// 	return floorDistance
+	// }
 
 	addStairs(campuses) { //добавление связей между лестницами в графе по данным
-		console.groupCollapsed('Добавление лестниц')
-		for (const [campusId, campus] of campuses) {
-			for (let corpusID in campus.corpuses) {
-				for (let stairsGroup of campus.corpuses[corpusID].stairsGroups) {
+		// console.groupCollapsed('Добавление лестниц')
+		for (const [, campus] of campuses) {
+			for (let corpusID in campus['corpuses']) {
+				for (let stairsGroup of campus['corpuses'][corpusID]['stairsGroups']) {
 					for (let stairIndex = 1; stairIndex < stairsGroup.length; stairIndex ++) {
 						const stairId1 = stairsGroup[stairIndex-1];
 						const stairId2 = stairsGroup[stairIndex];
@@ -156,12 +157,21 @@ export class Graph {
 				}
 			}
 		}
-		console.groupEnd()
+		// console.groupEnd()
+	}
+	
+	addCrossingsBCorpuses(campuses) {
+		for (const [, campus] of campuses) {
+			for (let [crossing1, crossing2, distance] of campus['crossings']){
+				console.log(crossing1, crossing2, distance)
+				this.addNeighborBoth(crossing1, crossing2, distance, distance)
+			}
+		}
 	}
 	
 	addNeighborBoth(vertexId1, vertexId2, distance1to2, distance2to1) {
 		this.getVertexByID(vertexId1).neighborData.push([vertexId2,distance1to2])
 		this.getVertexByID(vertexId2).neighborData.push([vertexId1,distance2to1])
-		console.log(vertexId1, this.getVertexByID(vertexId1).neighborData, vertexId2, this.getVertexByID(vertexId2).neighborData)
 	}
+	
 }

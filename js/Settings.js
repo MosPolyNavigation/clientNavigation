@@ -4,7 +4,7 @@ export class Settings {
 	static auditoriumsEngNames = new Map()
 	static throughPassVertexes = [] //Вершины со сквозным проходом (например аудитория со сквозным проходом)
 	static floors = new Map()
-	static wayColor = '#6b6e6b'
+	static wayColor = '#3CD288'
 	static wayWidth = '8px'
 	static defaultPlan = 'A-0'
 	static dataServer = 'https://mospolynavigation.github.io/navigationData'

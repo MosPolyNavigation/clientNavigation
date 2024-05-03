@@ -33,11 +33,10 @@ export class PlanHandler {
             $planDocument.documentElement.remove() //удаляем всё из документа <object>
         }
         else {
-            console.log('adf')
             let tempElement = document.createElement('div')
             tempElement.innerHTML += svgText
             this.$svgPlan = tempElement.firstChild.cloneNode(true)
-            console.log(this.$svgPlan)
+            // console.log(this.$svgPlan)
         }
         for(const $oldPlan of document.querySelectorAll('.plan'))
             $oldPlan.remove() //удаляем старый план
@@ -47,7 +46,7 @@ export class PlanHandler {
         
         this.$planObject.before(this.$svgPlan) //вставляем в map-objects загруженный план
         
-        console.groupCollapsed('Помещения')
+        // console.groupCollapsed('Помещения')
         for (let $space of this.$svgPlan.getElementById('Spaces').children) {
 			if($space.id.at(0) === "!"
                 || $space.tagName === 'g')
@@ -59,16 +58,16 @@ export class PlanHandler {
                 $space.classList.add('other-space') //и добавляем аудитории соответствующий класс, для подсветки
                 $space.removeAttribute('opacity')
             }
-            console.log($space);
+            // console.log($space);
         }
-        console.groupEnd()
-        console.groupCollapsed('Входы')
+        // console.groupEnd()
+        // console.groupCollapsed('Входы')
         for (let $entrance of this.$svgPlan.getElementById('Entrances').children) {
             this.entrances.set($entrance.id, $entrance)
             $entrance.classList.add('entrance') //и добавляем соответствующий класс для
-            console.log($entrance);
+            // console.log($entrance);
         }
-        console.groupEnd()
+        // console.groupEnd()
 
         function isEntranceOfAuditorium($entrance, $auditorium) {
             let cx = Number($entrance.getAttribute('cx'))
@@ -81,7 +80,7 @@ export class PlanHandler {
         }
         
         let entrances = new Map(planData.entrances)
-        console.log(entrances)
+        // console.log(entrances)
         for (const [auditoriumId, $auditorium] of this.auditoriums) {
             if (entrances.get(auditoriumId) !== undefined) {
                 this.AuditoriumsIdEntrancesId.set(auditoriumId, entrances.get(auditoriumId))
@@ -93,7 +92,7 @@ export class PlanHandler {
                 }
             }
         }
-        console.log(this.AuditoriumsIdEntrancesId)
+        // console.log(this.AuditoriumsIdEntrancesId)
 
         for (const [auId, $au] of this.auditoriums) { //для каждой аудитории поставить слушатель клика
             $au.addEventListener('click', event => this.onAuditoriumClicked(auId, event))
@@ -110,7 +109,7 @@ export class PlanHandler {
 
         this.$fromInput = document.querySelector('#input-from')
         this.$toInput = document.querySelector('#input-to')
-        console.log(this.$bFrom, this.$bTo)
+        // console.log(this.$bFrom, this.$bTo)
     }
 
     flipFromTo() {
@@ -199,21 +198,26 @@ export class PlanHandler {
         }
         this.$selector.setAttribute('auID', clickedAuId)
     }
-    removeButtonAnimation(){
-        let $arrFloorButtons = document.querySelectorAll('.floor-button')
-        $arrFloorButtons.forEach(function (button){
-            try {
-                button.classList.remove('next-floor')
-            }
-            catch {}
-        })
-    }
-    addLight(idStair, $nextFloorButton) {
-        $nextFloorButton.classList.toggle('next-floor')
+    
+    // removeButtonAnimation(){
+    //     let $arrFloorButtons = document.querySelectorAll('.floor-button')
+    //     $arrFloorButtons.forEach(function (button){
+    //         try {
+    //             button.classList.remove('next-floor')
+    //         }
+    //         catch {}
+    //     })
+    // }
+    
+    addLight(idStair, $nextFloorButton, controller, data) {
+        if ($nextFloorButton)
+            $nextFloorButton.classList.toggle('next-floor')
         let $stair = this.auditoriums.get(idStair)
         $stair.classList.toggle('transit-light')
         $stair.addEventListener('click',() => {
-            $nextFloorButton.click()
+            // $nextFloorButton.click()
+            // console.log(route.steps[route.activeStep + 1].plan)
+            controller.changePlan(route.steps[route.activeStep + 1].plan, data).then()
             setTimeout(function () {
                 planHandler.$selector.classList.remove('showing-selector')
             }, 20)
@@ -224,7 +228,7 @@ export class PlanHandler {
             if ($auditorium.classList.contains('transit-light')) {
                 $auditorium.classList.remove('transit-light')
             }
-            document.querySelectorAll('next-floor').forEach($button => {
+            document.querySelectorAll('.next-floor').forEach($button => {
                 $button.classList.remove('next-floor')
             })
         })

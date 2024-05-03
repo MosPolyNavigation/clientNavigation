@@ -27,14 +27,14 @@ export default class Data {
 				this.#addPlansNamesToEveryVertexes()
 				this.importedVertexes = concatVertexesFromAllPlans(this.plans)
 				this.status = true
-				console.log('Данные загружены', this)
+				// console.log('Данные загружены', this)
 			}
 		)
 	}
 	
 	#addPlansNamesToEveryVertexes() {
 		for (const [planName, planData] of this.plans) {
-			console.log('Добавляю в общий граф', planName, planData.graph)
+			// console.log('Добавляю в общий граф', planName, planData.graph)
 			for (const importedVertex of planData.graph) {
 				importedVertex.planName = planName
 			}

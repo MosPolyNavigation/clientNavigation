@@ -25,18 +25,14 @@ data.getData().then(() => {
 	console.log('Создаю граф')
 	graph = new Graph(data.importedVertexes)
 	graph.addStairs(data.campuses)
+	graph.addCrossingsBCorpuses(data.campuses)
 	window.graph = graph
 	controller.setup(
 		document.querySelector('.switcher'),
 		document.querySelector('.floors-switcher'),
 		data,
-		Settings.defaultPlan,
-		planHandler
+		Settings.defaultPlan
 	)
-	// graph.getVertexByID('n-4_27').neighborData = []
-	// graph.getVertexByID('n-4_25').neighborData = []
-	// graph.getVertexByID('n-2-stair-2').neighborData = []
-	// graph.getVertexByID('n-2-stair-1').neighborData = []
 })
 
 let isPlanLoaded = false
@@ -98,7 +94,7 @@ document.querySelector('.build-way').addEventListener('click',() => {
 	way.removeOldWays()
 	route = new Route(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId))
 	window.route = route
-	controller.changePlan(route.steps[0].plan, data)
+	controller.changePlan(route.steps[0].plan, data).then()
 	document.querySelector(`label:has(input[value=${route.steps[route.activeStep].plan}])`).click()
 })
 
@@ -112,7 +108,7 @@ document.querySelector('.section-main').onwheel = function(e) {
 	e.preventDefault()
 	return false
 }
-document.querySelector('.section-main').ontouchmove = function(e) {
+document.querySelector('.section-main').ontouchmove = function() {
 	// e.preventDefault()
 	// document.querySelector('.section-main').innerHTML += e.target.tagName
 	return false

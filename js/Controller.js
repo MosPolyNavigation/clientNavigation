@@ -8,7 +8,7 @@ export class Controller {
 	#campusesForm
 	#floorsForm
 	
-	setup(switcher, floorsSwitcherForm, data, defaultPlan, planHandler) {
+	setup(switcher, floorsSwitcherForm, data, defaultPlan) {
 		this.#switcherForm = switcher
 		this.#corpusesForm = this.#switcherForm.querySelector('.corpuses')
 		this.#campusesForm = this.#switcherForm.querySelector('.campuses')
@@ -28,7 +28,7 @@ export class Controller {
 	}
 	
 	getActiveCorpus() {
-		return this.#switcherForm.elements.corpuses.value
+		return this.#switcherForm.elements['corpuses'].value
 	}
 	
 	getActivePlan() {
@@ -52,7 +52,7 @@ export class Controller {
 			this.#campusesForm.innerHTML += `
 			<label>
 				<input type="radio" name="campuses" value="${campusData.id}">
-				${campusData.rusName}
+				${campusData['rusName']}
 			</label>`
 		}
 		for (const nodeLabel of this.#campusesForm.getElementsByTagName('input')) {
@@ -63,13 +63,13 @@ export class Controller {
 	#fillCorpuses(data) {
 		this.#clearCorpusesList()
 		let activeCampusId = this.getActiveCampus()
-		let corpuses = data.campuses.get(activeCampusId).corpuses
+		let corpuses = data.campuses.get(activeCampusId)['corpuses']
 		this.#corpusesForm.setAttribute('forCampus', activeCampusId)
 		for (const corpusId in corpuses) {
 			this.#corpusesForm.innerHTML += `
 			<label>
 				<input type="radio" name="corpuses" value="${corpusId}">
-				${corpuses[corpusId].rusName}
+				${corpuses[corpusId]['rusName']}
 			</label>`
 		}
 		for (const nodeLabel of this.#corpusesForm.getElementsByTagName('input')) {
@@ -101,7 +101,7 @@ export class Controller {
 	changeCorpus(campusId, corpusId, data) {
 		if(this.getActiveCampus()!==campusId)
 			this.changeCampus(campusId, data)
-		this.#switcherForm.elements.corpuses.value = corpusId
+		this.#switcherForm.elements['corpuses'].value = corpusId
 		this.#fillFloors(data)
 	for (const nodeLabel of this.#floorsForm.getElementsByTagName('input')) {
 		nodeLabel.addEventListener('change', ev => this.changePlan(ev.target.value, data))
