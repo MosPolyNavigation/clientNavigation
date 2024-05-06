@@ -40,7 +40,7 @@ export class Controller {
 			this.#corpusesForm.getElementsByTagName('label')[0].remove()
 		}
 	}
-
+	
 	#clearFloorsList() {
 		while (this.#floorsForm.getElementsByTagName('label').length !== 0) {
 			this.#floorsForm.getElementsByTagName('label')[0].remove()
@@ -73,24 +73,27 @@ export class Controller {
 			</label>`
 		}
 		for (const nodeLabel of this.#corpusesForm.getElementsByTagName('input')) {
-			nodeLabel.addEventListener('change', ev => this.changeCorpus(this.getActiveCampus(), ev.target.value, data))
+			nodeLabel.addEventListener('change', ev => this.changeCorpus(this.getActiveCampus(), ev.target.value, data, true))
 		}
 	}
 	
 	#fillFloors(data) {
 		this.#clearFloorsList()
-		let activeCampusId = this.getActiveCampus()
-		let activeCorpusId = this.getActiveCorpus()
-		for (const [planName, planData] of data.plans) {
-			if (planData.campus === activeCampusId && planData.corpus === activeCorpusId) {
-				this.#floorsForm.innerHTML += `
+		let floors = [...data.plans.values()].filter(planData =>
+			planData.campus === this.getActiveCampus()
+			&& planData.corpus === this.getActiveCorpus()
+		)
+		floors.sort((a, b) => a.floor - b.floor)
+		console.log(floors)
+		floors.forEach(planData => {
+			this.#floorsForm.innerHTML += `
 				<label class="button">
-					<input type="radio" name="floors" value="${planName}">
+					<input type="radio" name="floors" value="${planData.planName}">
 					${planData.floor}
 				</label>
 				`
-			}
-		}
+		})
+		return floors
 	}
 	
 	changeCampus(campusId, data) {
@@ -98,14 +101,17 @@ export class Controller {
 		this.#fillCorpuses(data)
 	}
 	
-	changeCorpus(campusId, corpusId, data) {
-		if(this.getActiveCampus()!==campusId)
+	changeCorpus(campusId, corpusId, data, needToChangePlan = false) {
+		if (this.getActiveCampus() !== campusId)
 			this.changeCampus(campusId, data)
 		this.#switcherForm.elements['corpuses'].value = corpusId
-		this.#fillFloors(data)
-	for (const nodeLabel of this.#floorsForm.getElementsByTagName('input')) {
-		nodeLabel.addEventListener('change', ev => this.changePlan(ev.target.value, data))
-	}
+		let floors = this.#fillFloors(data)
+		for (const nodeLabel of this.#floorsForm.getElementsByTagName('input')) {
+			nodeLabel.addEventListener('change', ev => this.changePlan(ev.target.value, data))
+		}
+		if(needToChangePlan){
+			this.changePlan(floors[0].planName, data).then()
+		}
 	}
 	
 	async changePlan(planName, data) {
