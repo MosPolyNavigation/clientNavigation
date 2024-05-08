@@ -26,7 +26,14 @@ export class Route {
 				)
 			}
 		}
-		
+		if (this.steps[0].way.length === 1) {
+			this.steps[0].way.unshift(graph.getVertexByID(this.steps[0].way[0]).neighborData[0][0])
+			this.steps[0].distance = graph.getVertexByID(this.steps[0].way[0]).neighborData[0][1]
+		}
+		if (this.steps.at(-1).way.length === 1) {
+			this.steps.at(-1).way.push(graph.getVertexByID(this.steps.at(-1).way[0]).neighborData[0][0])
+			this.steps.at(-1).distance = graph.getVertexByID(this.steps.at(-1).way[0]).neighborData[0][1]
+		}
 		//удаляем пустые этажи (обычно лестничный пролет)
 		this.steps = this.steps.filter(step => step.way.length>1)
 

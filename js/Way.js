@@ -54,8 +54,6 @@ export class Way { //класс для обработки свг-пути
 	}
 
 	visualGraph(route) {
-		console.clear()
-		console.log('Визуал запущен')
 		planHandler.removeOldLights()
 		this.removeOldWays()
 		this.removeOldWays()
