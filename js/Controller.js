@@ -88,7 +88,7 @@ export class Controller {
 		floors.forEach(planData => {
 			this.#floorsForm.innerHTML += `
 				<label class="button">
-					<input type="radio" name="floors" value="${planData.planName}">
+					<input type="radio" name="floors" value="${planData.planName}" id="btn-floor-${planData.floor}">
 					${planData.floor}
 				</label>
 				`
