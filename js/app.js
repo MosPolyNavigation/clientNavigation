@@ -91,14 +91,31 @@ document.querySelector('.get-way').addEventListener('click', () => {
 })
 
 document.querySelector('.build-way').addEventListener('click',() => {
+	startNewRoute(planHandler.fromId, planHandler.toId)
+})
+
+function startNewRoute(fromId, toId) {
+	planHandler.fromId = fromId
+	planHandler.toId = toId
 	way.removeOldWays()
-	route = new Route(graph.getShortestWayFromTo(planHandler.fromId, planHandler.toId))
+	route = new Route(graph.getShortestWayFromTo(fromId, toId))
 	window.route = route
 	controller.changePlan(route.steps[0].plan, data).then()
 	document.querySelector(`label:has(input[value=${route.steps[route.activeStep].plan}])`).click()
-})
+}
 
+window.startNewRoute = startNewRoute
 
+function nextStep() {
+	if(route && (route.steps.length - 1 !== route.activeStep)) {
+	controller.changePlan(route.steps[route.activeStep + 1].plan, data).then()
+	}
+	else {
+		console.log('Это был последний этап')
+	}
+}
+
+window.nextStep = nextStep
 
 document.querySelector('.map-wrapper').onwheel = function(e) {
 	e.preventDefault()
