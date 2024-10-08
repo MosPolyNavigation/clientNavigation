@@ -114,7 +114,28 @@ function nextStep() {
 		console.log('Это был последний этап')
 	}
 }
-
+function hideAllExcept() {
+	document.querySelector('.scale-buttons').style.visibility = 'hidden'
+	document.querySelector('.floors-switcher').style.visibility = 'hidden'
+	document.querySelector('.menu').style.visibility = 'hidden'
+	document.querySelector('.menu').style.width = '0'
+	document.querySelector('.section-main').style.gap = '0'
+	document.querySelector('.map-wrapper').style.width = '100%'
+	document.querySelector('.map-wrapper').style.height = '100%'
+	document.querySelector('.map-wrapper').style.border = '50px solid transparent'
+}
+function returnAllExcept() {
+	document.querySelector('.scale-buttons').style.visibility = 'visible'
+	document.querySelector('.floors-switcher').style.visibility = 'visible'
+	document.querySelector('.menu').style.visibility = 'visible'
+	document.querySelector('.menu').style.width = '150px'
+	document.querySelector('.section-main').style.gap = '40px'
+	document.querySelector('.map-wrapper').style.width = '80%'
+	document.querySelector('.map-wrapper').style.height = '80%'
+	document.querySelector('.map-wrapper').style.border = ' #3B3C41 solid 3px'
+}
+window.hideAllExcept = hideAllExcept
+window.returnAllExcept = returnAllExcept
 window.nextStep = nextStep
 
 document.querySelector('.map-wrapper').onwheel = function(e) {
