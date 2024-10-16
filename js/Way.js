@@ -25,7 +25,11 @@ export class Way { //класс для обработки свг-пути
 		d = d.slice(0, - 1); //удаляем последнюю L
 		
 		let $path = document.createElementNS('http://www.w3.org/2000/svg', 'path') //элемент path
-		$path.setAttribute('style', `stroke-dashoffset: ${step.distance}; stroke-dasharray: ${step.distance}; filter: saturate(${Number(wayOpacity)**2});`)
+	
+		if (window.animationFlag == 'red'){
+			console.log(window.animationFlaf == 'red')
+			$path.setAttribute('style', `stroke-dashoffset: ${step.distance}; stroke-dasharray: ${step.distance}; filter: saturate(${Number(wayOpacity)**2});`)
+		}
 		$path.setAttribute('d', d) //устанавливаем путь в атрибут d
 		$path.setAttribute('stroke', Settings.wayColor) //цвет линии
 		$path.setAttribute('opacity', wayOpacity) //цвет линии
@@ -41,9 +45,14 @@ export class Way { //класс для обработки свг-пути
 
 		$path.classList.add('way-path')
 		this.$svg.prepend($path) //добавляем path в свг
-		setTimeout(function () { //через секунду - когда линия полностью нарисуется добавить маркер конца - стрелочку
+		if (window.animationFlag == 'red') {
+			setTimeout(function () { //через секунду - когда линия полностью нарисуется добавить маркер конца - стрелочку
+				this.$endMarker.style.visibility = 'visible'
+			}.bind(this), 1000)
+		}
+		else {
 			this.$endMarker.style.visibility = 'visible'
-		}.bind(this), 1000)
+		}
 		console.log($path)
 	}
 	

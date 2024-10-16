@@ -114,6 +114,7 @@ function nextStep() {
 		console.log('Это был последний этап')
 	}
 }
+window.animationFlag = 'red'
 function hideAllExcept() {
 	document.querySelector('.scale-buttons').style.visibility = 'hidden'
 	document.querySelector('.floors-switcher').style.visibility = 'hidden'
@@ -123,6 +124,7 @@ function hideAllExcept() {
 	document.querySelector('.map-wrapper').style.width = '100%'
 	document.querySelector('.map-wrapper').style.height = '100%'
 	document.querySelector('.map-wrapper').style.border = '50px solid transparent'
+	animationFlag = 'green'
 }
 function returnAllExcept() {
 	document.querySelector('.scale-buttons').style.visibility = 'visible'
@@ -133,6 +135,7 @@ function returnAllExcept() {
 	document.querySelector('.map-wrapper').style.width = '80%'
 	document.querySelector('.map-wrapper').style.height = '80%'
 	document.querySelector('.map-wrapper').style.border = ' #3B3C41 solid 3px'
+	animationFlag = 'red'
 }
 window.hideAllExcept = hideAllExcept
 window.returnAllExcept = returnAllExcept

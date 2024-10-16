@@ -213,7 +213,9 @@ export class PlanHandler {
         if ($nextFloorButton)
             $nextFloorButton.classList.toggle('next-floor')
         let $stair = this.auditoriums.get(idStair)
-        $stair.classList.toggle('transit-light')
+        if (window.animationFlag == 'red') {
+            $stair.classList.toggle('transit-light')
+        }
         $stair.addEventListener('click',() => {
             // $nextFloorButton.click()
             // console.log(route.steps[route.activeStep + 1].plan)
