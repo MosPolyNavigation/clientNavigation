@@ -569,6 +569,12 @@ position: absolute;
 	height: 44px;
 	text-align: center;
 }
+.campus-name {
+	position: absolute;
+	top: 50px;
+	z-index: 10;
+	left: 4%;
+}
 
 /*			ВЕРТИКАЛЬНАЯ ОРИЕНТАЦИЯ			*/
 @media all and (orientation: portrait) {

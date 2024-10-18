@@ -51,6 +51,12 @@ dragHandler = new DragHandler(
 	//////Добавить параметр следующий/предыдуший или обновление
 export function processGraphAndPlan(isObject = true, svgText = '', planData) {
 	console.log('план загружен', Date.now())
+	console.clear()
+	console.log(planData)
+	console.log(data)
+	let campusText = data.campuses.get(planData.campus).rusName + ', корпус ' + data.campuses.get(planData.campus).corpuses[planData.corpus].rusName + ', этаж ' + planData.floor
+	document.querySelector('.inf-plan').textContent = campusText
+	console.log(campusText)
 	isPlanLoaded = true
 	if (isPlanLoaded) {
 		planHandler.onPlanLoad(isObject, svgText, planData)
@@ -140,6 +146,8 @@ function returnAllExcept() {
 window.hideAllExcept = hideAllExcept
 window.returnAllExcept = returnAllExcept
 window.nextStep = nextStep
+
+
 
 document.querySelector('.map-wrapper').onwheel = function(e) {
 	e.preventDefault()
