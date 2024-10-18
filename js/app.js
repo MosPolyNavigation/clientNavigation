@@ -51,12 +51,8 @@ dragHandler = new DragHandler(
 	//////Добавить параметр следующий/предыдуший или обновление
 export function processGraphAndPlan(isObject = true, svgText = '', planData) {
 	console.log('план загружен', Date.now())
-	console.clear()
-	console.log(planData)
-	console.log(data)
 	let campusText = data.campuses.get(planData.campus).rusName + ', корпус ' + data.campuses.get(planData.campus).corpuses[planData.corpus].rusName + ', этаж ' + planData.floor
 	document.querySelector('.inf-plan').textContent = campusText
-	console.log(campusText)
 	isPlanLoaded = true
 	if (isPlanLoaded) {
 		planHandler.onPlanLoad(isObject, svgText, planData)
@@ -130,6 +126,7 @@ function hideAllExcept() {
 	document.querySelector('.map-wrapper').style.width = '100%'
 	document.querySelector('.map-wrapper').style.height = '100%'
 	document.querySelector('.map-wrapper').style.border = '50px solid transparent'
+	document.querySelector('.campus-name').style.top = '20px'
 	animationFlag = 'green'
 }
 function returnAllExcept() {
@@ -141,6 +138,8 @@ function returnAllExcept() {
 	document.querySelector('.map-wrapper').style.width = '80%'
 	document.querySelector('.map-wrapper').style.height = '80%'
 	document.querySelector('.map-wrapper').style.border = ' #3B3C41 solid 3px'
+	document.querySelector('.campus-name').style.top = '50px'
+
 	animationFlag = 'red'
 }
 window.hideAllExcept = hideAllExcept
