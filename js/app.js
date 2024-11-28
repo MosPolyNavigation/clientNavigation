@@ -1,11 +1,11 @@
-import {Graph} from './Graph.js';
-import {PlanHandler} from './PlanHandler.js'
-import {Settings} from './Settings.js'
-import {Way} from './Way.js'
-import {DragHandler} from "./DragHandler.js";
-import Data from "./Data.js"
-import {Controller} from "./Controller.js";
-import {Route} from './Route.js'
+import {Graph} from './Graph.js'; // Класс отвечающий за построения пути по графу
+import {PlanHandler} from './PlanHandler.js' // Класс отвечающий за визуальное наполнение карты
+import {Settings} from './Settings.js'// Класс со статическими данными
+import {Way} from './Way.js'// Класс для отрисовки пути
+import {DragHandler} from "./DragHandler.js"; // Класс отвечающий за движение (Зум)
+import Data from "./Data.js" // Класс Веб сервера
+import {Controller} from "./Controller.js"; // Класс преобразовывающий данные из веб сервера
+import {Route} from './Route.js' // Класс составляющий стадии пути 
 
 //обработчик карты, передаем объект содержащий карту
 export let planHandler = new PlanHandler(document.querySelector('.plan-object'))
@@ -20,7 +20,7 @@ let route
 
 export let controller = new Controller()
 window.controller = controller
-
+// ПОлучаем данные из сервера
 data.getData().then(() => {
 	console.log('Создаю граф')
 	graph = new Graph(data.importedVertexes)
@@ -49,6 +49,7 @@ dragHandler = new DragHandler(
 	document.querySelector('.button-minus'));
 
 	//////Добавить параметр следующий/предыдуший или обновление
+// Загружаем план
 export function processGraphAndPlan(isObject = true, svgText = '', planData) {
 	console.log('план загружен', Date.now())
 	let campusText = data.campuses.get(planData.campus).rusName + ', корпус ' + data.campuses.get(planData.campus).corpuses[planData.corpus].rusName + ', этаж ' + planData.floor
@@ -66,7 +67,7 @@ export function processGraphAndPlan(isObject = true, svgText = '', planData) {
 }
 
 export let way = new Way(document.querySelector('.svg-way'),)
-
+//Функции для тг бота
 export function activateButton(buttonClassName) {
 	document.getElementsByClassName(buttonClassName)[0].classList.remove('non-active-button')
 }
@@ -74,6 +75,7 @@ export function activateButton(buttonClassName) {
 export function deactivateButton(buttonClassName) {
 	document.getElementsByClassName(buttonClassName)[0].classList.add('non-active-button')
 }
+// Вызываем функцию которая возвращает массив вершин по которым нужно пройтись
 document.querySelector('.get-way').addEventListener('click', () => {
 	let idVertex1 = document.getElementById('input-idPoint1').value
 	let idVertex2 = document.getElementById('input-idPoint2').value
@@ -95,7 +97,7 @@ document.querySelector('.get-way').addEventListener('click', () => {
 document.querySelector('.build-way').addEventListener('click',() => {
 	startNewRoute(planHandler.fromId, planHandler.toId)
 })
-
+// Запускаем новый путь
 function startNewRoute(fromId, toId) {
 	planHandler.fromId = fromId
 	planHandler.toId = toId
@@ -107,7 +109,7 @@ function startNewRoute(fromId, toId) {
 }
 
 window.startNewRoute = startNewRoute
-
+//Следующий этап
 function nextStep() {
 	if(route && (route.steps.length - 1 !== route.activeStep)) {
 	controller.changePlan(route.steps[route.activeStep + 1].plan, data).then()
@@ -117,6 +119,7 @@ function nextStep() {
 	}
 }
 window.animationFlag = 'red'
+// Функции для тг бота
 function hideAllExcept() {
 	document.querySelector('.scale-buttons').style.visibility = 'hidden'
 	document.querySelector('.floors-switcher').style.visibility = 'hidden'
