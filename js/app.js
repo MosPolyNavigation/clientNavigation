@@ -20,13 +20,13 @@ let route
 
 export let controller = new Controller()
 window.controller = controller
-// ПОлучаем данные из сервера
+// Получаем данные из сервера
 data.getData().then(() => {
 	console.log('Создаю граф')
 	graph = new Graph(data.importedVertexes)
+	window.graph = graph
 	graph.addStairs(data.campuses)
 	graph.addCrossingsBCorpuses(data.campuses)
-	window.graph = graph
 	controller.setup(
 		document.querySelector('.switcher'),
 		document.querySelector('.floors-switcher'),

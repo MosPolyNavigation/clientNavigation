@@ -143,19 +143,25 @@ export class Graph {
 	// }
 
 	addStairs(campuses) { //добавление связей между лестницами в графе по данным
-		// console.groupCollapsed('Добавление лестниц')
+		console.groupCollapsed('Добавление лестниц')
 		for (const [, campus] of campuses) {
+			console.groupCollapsed(`Кампус ${campus['rusName']}`)
 			for (let corpusID in campus['corpuses']) {
+				console.log(`Корпус ${campus['corpuses'][corpusID]['rusName']}`)
+				let i = 0
 				for (let stairsGroup of campus['corpuses'][corpusID]['stairsGroups']) {
+					console.log(`Группа ${i}`)
 					for (let stairIndex = 1; stairIndex < stairsGroup.length; stairIndex ++) {
 						const stairId1 = stairsGroup[stairIndex-1];
 						const stairId2 = stairsGroup[stairIndex];
 						this.addNeighborBoth(stairId1, stairId2, 1085, 916)
 					}
+					i++
 				}
 			}
+			console.groupEnd()
 		}
-		// console.groupEnd()
+		console.groupEnd()
 	}
 	
 	addCrossingsBCorpuses(campuses) {
@@ -168,6 +174,7 @@ export class Graph {
 	}
 	
 	addNeighborBoth(vertexId1, vertexId2, distance1to2, distance2to1) {
+		console.log(`Делаю вершины \t ${vertexId1} \t и \t ${vertexId2} соседними с расстояниями ${distance1to2} и ${distance2to1}`)
 		this.getVertexByID(vertexId1).neighborData.push([vertexId2,distance1to2])
 		this.getVertexByID(vertexId2).neighborData.push([vertexId1,distance2to1])
 	}
